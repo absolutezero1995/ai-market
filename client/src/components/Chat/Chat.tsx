@@ -8,18 +8,21 @@ import { useState } from "react";
 function Chat() {
     const [leftBarVisible, setLeftBarVisible] = useState(true);
     const [rightBarVisible, setRightBarVisible] = useState(true);
+    const [chats, setChats] = useState([])
     const toggleLeftBar = () => {
         setLeftBarVisible(!leftBarVisible);
     };
     const toggleRightBar = () => {
         setRightBarVisible(!rightBarVisible);
     };
-
+    const addChat = (chat) => {
+        setChats([...chats, chat])
+    }
 
     return(
         <div className="block-chat">
             <div className="block-left">
-                {leftBarVisible && <LeftBar visible={leftBarVisible} />}
+                {leftBarVisible && <LeftBar visible={leftBarVisible} chats={chats}/>}
                 <span className="icon-bar" onClick={toggleLeftBar}>{leftBarVisible ? <FontAwesomeIcon icon={faChevronRight} /> : <FontAwesomeIcon icon={faChevronLeft} />}</span>
             </div>
             
@@ -32,7 +35,7 @@ function Chat() {
                 <span className="icon-bar" onClick={toggleRightBar}>{rightBarVisible ? <FontAwesomeIcon icon={faChevronLeft} /> : <FontAwesomeIcon icon={faChevronRight} />}</span>
             </div>
              
-                {rightBarVisible && <RightBar visibleR={rightBarVisible} />}
+                {rightBarVisible && <RightBar visibleR={rightBarVisible} addChat={addChat}/>}
         </div>
     )
 }
