@@ -1,0 +1,29 @@
+.block-search{
+    display: flex;
+    border: 1px solid gray;
+    border-radius: 8px;
+    padding: 5px;
+    margin-top: 15px;
+}
+
+.input-search{
+    width: 100%;
+    border: none;
+    font-size: 18px;
+    border-bottom: 1px solid gray;
+    padding: 8px;
+    margin-right: 15px;
+    cursor: pointer;
+}
+
+.input-search:focus{
+    outline: none;
+}
+
+.btn-search{
+    padding: 5px 10px;
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-size: 16px;
+}

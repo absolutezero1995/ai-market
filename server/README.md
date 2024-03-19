@@ -1,0 +1,4 @@
+DB_USERNAME=absolutezero1995
+DB_PASSWORD=123123
+DB_NAME=aidb
+DB_HOST=localhost

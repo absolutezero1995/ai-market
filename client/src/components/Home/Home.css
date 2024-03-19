@@ -1,0 +1,101 @@
+.home-block{
+    margin: 0 80px;
+}
+
+.info{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+p{
+    margin: 0;
+    padding: 0;
+}
+
+.lint-servis{
+    color: #3960EF;
+    text-decoration: underline;
+}
+
+.left-block p{
+    font-size: 64px;
+    font-family: "Nova Square", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.right-block{
+    display: flex;
+    align-items: center;
+}
+
+.right-block p{
+    font-size: 16px;
+}
+
+.btn-start-now, .btn-sign-in{
+    padding: 20px 50px;
+    border-radius: 10px;
+    border: 1px solid #005EEB;
+    font-size: 24px;
+    font-family: "Inter", sans-serif;
+    font-weight: 700;
+}
+
+.btn-start-now{
+    background-color: #005EEB;
+    color: #fff;
+    margin-right: 20px;
+}
+
+.btn-sign-in{
+    background-color: #fff;
+    color: #000;
+}
+
+.block-piano{
+    width: 100%;
+    margin: 40px 0 40px 0;
+}
+
+.piano-keys-list {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+}
+ 
+.piano-keys {
+    width: 5rem;
+    cursor: pointer;
+    position: relative;
+    height: 20rem;
+    border-radius: 10px;
+    border: 1px solid #000;
+}
+ 
+.white-key {
+    background-color: #fff;
+}
+
+.white-key:checked{
+    background-color: gray;
+}
+
+.black-key {
+    width: 2rem;
+    height: 13rem;
+    border-radius: 5px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    background-color: #000;
+    z-index: 2;
+    margin: 0 -20px 0 -20px;
+}
+
+.block-recording{
+    text-align: center;
+    font-size: 24px;
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    padding-bottom: 40px;
+}

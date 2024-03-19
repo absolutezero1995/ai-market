@@ -1,0 +1,29 @@
+.nav-menu{
+ position: absolute;
+ top: 15px;
+ right: 250px;
+}
+
+.ul-list {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    list-style: none;
+}
+
+.ul-list > li {
+    cursor: pointer;
+    font-size: 24px;
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+
+.block-light{
+    font-size: 25px;
+    cursor: pointer;
+    margin-right: 15px;
+}
