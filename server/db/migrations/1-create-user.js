@@ -16,6 +16,7 @@ module.exports = {
       email: {
         unique: true,
         allowNull: false,
+        unique: true,
         type: Sequelize.TEXT
       },
       password: {
