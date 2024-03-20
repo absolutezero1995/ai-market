@@ -28,7 +28,7 @@ function Navigation() {
       {isAuthenticated ? (
       <>
       <li>
-        <Link to="/main">Chat</Link>
+        <Link to="/chat">Chat</Link>
       </li>
       <li>
         <Link to="/account">Sign-out</Link>

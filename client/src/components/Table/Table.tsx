@@ -64,30 +64,33 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import "./Table.css";
 
-import { sendMessage, setInput, setView } from '../../features/chat/chatSlice';
+import { sendMessage } from '../../features/chat/chatSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { useState } from 'react';
 
 function Table() {
   const dispatch = useAppDispatch();
-  const input = useAppSelector((state) => state.chat.input);
+  const [input, setInput] = useState<string>('');
   const view = useAppSelector((state) => state.chat.view);
 
-  console.log(view, "---");
-
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(setInput(e.target.value));
+    setInput(e.target.value);
   }
 
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyPress = (e:  React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      handleSend();
+      handleSend()
+      setInput('');
     }
   }
 
-  const handleSend = () => {
-    dispatch(sendMessage(input));
-    dispatch(setView([...view, input]));
-    dispatch(setInput(''));
+  const handleSend = async () => {
+    try {
+      await dispatch(sendMessage(input));
+      setInput('');
+    } catch (error) {
+      console.error('Ошибка отправки сообщения:', error);
+    }
   }
 
 

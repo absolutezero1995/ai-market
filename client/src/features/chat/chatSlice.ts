@@ -7,7 +7,6 @@ interface MessageResponse {
 
 interface ChatState {
   messages: string[];
-  input: string;
   view: string[];
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
@@ -15,7 +14,6 @@ interface ChatState {
 
 const initialState: ChatState = {
   messages: [],
-  input: '',
   view: [],
   status: 'idle',
   error: null
@@ -40,28 +38,22 @@ export const sendMessage = createAsyncThunk(
 const chatSlice = createSlice({
   name: 'chat',
   initialState,
-  reducers: {
-    setInput: (state, action) => {
-      state.input = action.payload;
-    },
-    setView: (state, action) => {
-      state.view = [action.payload, action.payload.content];
-    }
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(sendMessage.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(sendMessage.fulfilled, (state, action) => {
-        state.status = 'succeeded';
-        state.messages.push(action.payload);
-      })
       .addCase(sendMessage.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.payload as string;
+      })
+      .addCase(sendMessage.fulfilled, (state, action) => {
+        state.messages.push(action.payload);
+        state.view = [action.payload, ...state.view];
+        state.status = 'succeeded';
       });
   }
 });
-export const { setInput, setView } = chatSlice.actions;
+
 export default chatSlice.reducer;
