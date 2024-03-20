@@ -3,8 +3,8 @@ const bcrypt = require('bcrypt');
 const { User } = require('../../db/models');
 
 // --------------------------------------------------------
-router.route('/register').post(async (req, res) => {
-  console.log('**************req.body: ', req.body);
+router.route('/signup').post(async (req, res) => {
+  // console.log('**************req.body: ', req.body);
   const { email, password } = req.body;
   const hash = await bcrypt.hash(password, 10);
 
@@ -20,7 +20,6 @@ router.route('/register').post(async (req, res) => {
     const newUser = await User.create({
       ...req.body,
       password: hash,
-      is_admin: false,
     });
     if (newUser.id) {
       req.session.userId = newUser.id;
@@ -35,7 +34,7 @@ router.route('/register').post(async (req, res) => {
 });
 
 // --------------------------------------------------------
-router.route('/login').post(async (req, res) => {
+router.route('/signin').post(async (req, res) => {
   const { email, password } = req.body;
 
   try {
