@@ -1,4 +1,5 @@
-// export type Chat = {
-//   id?: number;
-// };
+export type Chat = {
+  id?: number;
+  user_id?: number
+};
 

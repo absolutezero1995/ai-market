@@ -66,14 +66,13 @@ import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import "./Table.css";
 
 import { sendMessage } from '../../features/chat/chatSlice';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { useAppDispatch } from '../../hooks/redux';
 import { useState } from 'react';
 
 function Table() {
   const dispatch = useAppDispatch();
   const [input, setInput] = useState<string>('');
-  const [views, setViews] = useState<Array>([]);
-  const view = useAppSelector((state) => state.chat.view);
+  const [views, setViews] = useState<string[]>([]);
 
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -91,7 +90,7 @@ function Table() {
     try {
       const res = await dispatch(sendMessage(input));
       console.log(res, 'TABLE92');
-      setViews(prevViews => [...prevViews, res.payload]);
+      setViews(prevViews => [...prevViews, res.payload as string]);
       setInput('');
     } catch (e) {
       console.log(e);

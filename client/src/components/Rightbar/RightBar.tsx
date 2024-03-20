@@ -7,6 +7,7 @@ interface visibleProps {
 
 function RightBar({ visibleR }: visibleProps) {
 
+
     return(
         <div className={`block-right-bar ${!visibleR ? 'hidden' : ''}`}>
             <div className="block-right-bar-content">

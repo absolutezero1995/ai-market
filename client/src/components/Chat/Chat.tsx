@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import "./Chat.css"
 import { useState } from "react";
-function Chat() {
+function Chat(): JSX.Element {
     const [leftBarVisible, setLeftBarVisible] = useState(true);
     const [rightBarVisible, setRightBarVisible] = useState(true);
     const toggleLeftBar = () => {
@@ -31,7 +31,6 @@ function Chat() {
                 </div>
                 <span className="icon-bar" onClick={toggleRightBar}>{rightBarVisible ? <FontAwesomeIcon icon={faChevronLeft} /> : <FontAwesomeIcon icon={faChevronRight} />}</span>
             </div>
-             
                 {rightBarVisible && <RightBar visibleR={rightBarVisible} />}
         </div>
     )
