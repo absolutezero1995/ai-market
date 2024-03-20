@@ -4,10 +4,19 @@ const { User } = require('../../db/models');
 
 // --------------------------------------------------------
 router.route('/register').post(async (req, res) => {
-  // console.log('**************req.body: ', req.body);
-  const hash = await bcrypt.hash(req.body.password, 10);
+  console.log('**************req.body: ', req.body);
+  const { email, password } = req.body;
+  const hash = await bcrypt.hash(password, 10);
 
   try {
+    const oldUser = await User.findOne({
+      where: { email },
+    });
+
+    if (oldUser) {
+      return res.status(401).json({ error: 'Email is already registered!' });
+    }
+
     const newUser = await User.create({
       ...req.body,
       password: hash,
