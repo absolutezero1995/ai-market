@@ -1,21 +1,20 @@
 import { Link } from 'react-router-dom';
-import './Navigation.css';
+// import './Navigation.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faToggleOff } from '@fortawesome/free-solid-svg-icons';
 
 function Navigation() {
   return (
-    <nav className="nav-menu">
-      
-      <ul className='ul-list'>
+    <nav className="bg-gray-400 h-12 flex items-center justify-end text-white p-4">
+      <ul className="list-none flex gap-x-8">
       <li>
         <div className='block-light'><FontAwesomeIcon icon={faToggleOff} /></div>
         </li>
       <li>
-        <Link to="/account">Sign-in</Link>
+        <Link to="/login">Login</Link>
       </li>
       <li>
-        <Link to="/account">Sign-up</Link>
+        <Link to="/signup">Signup</Link>
         </li>
       {/* <li>
         <Link to="/account">Аccount</Link>
