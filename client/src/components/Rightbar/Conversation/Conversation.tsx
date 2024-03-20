@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import ConversationForm from "./ConvesationForm/ConversationForm";
 
 function Conversation() {
-  const [form, setFrom] = useState(false);
+  const [, setFrom] = useState(false);
 
   return (
     <>

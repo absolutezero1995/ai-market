@@ -1,11 +1,10 @@
 import { useState } from "react";
-import Conversation from "../ConversationForm/Conversation";
 import "./Leftbar.css";
-import ConversationForm from "../ConversationForm/ConvesationForm/ConversationForm";
+import ConversationForm from "../Rightbar/Conversation/ConvesationForm/ConversationForm";
 
 interface Props {
   visible: boolean;
-  chats: [];
+  chats: JSX.Element[];
 }
 
 function LeftBar({ visible, chats }: Props) {
