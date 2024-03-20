@@ -2,26 +2,38 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Rates', {
+    await queryInterface.createTable('ChatSettings', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      user_id: {
+      chat_id: {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
-          model: "Users",
+          model: "Chats",
           key: "id"
         },
         onDelete: "CASCADE"
       },
-      total: {
+      title: {
         allowNull: false,
-        type: Sequelize.INTEGER,
-        },
+        type: Sequelize.TEXT
+      },
+      role: {
+        allowNull: false,
+        type: Sequelize.TEXT
+      },
+      version: {
+        allowNull: false,
+        type: Sequelize.TEXT
+      },
+      temperature: {
+        allowNull: false,
+        type: Sequelize.INTEGER
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -33,6 +45,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Rates');
+    await queryInterface.dropTable('ChatSettings');
   }
 };

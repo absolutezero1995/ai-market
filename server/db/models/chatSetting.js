@@ -3,36 +3,40 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Question extends Model {
-    static associate({Category}) {
-      this.belongsTo(Category, {foreignKey: 'category_id'})
+  class ChatSetting extends Model {
+    static associate({Chat}) {
+      this.belongsTo(Chat, {foreignKey: 'chat_id'})
     }
   }
-  Question.init({
-    category_id: {
+  ChatSetting.init({
+    chat_id: {
       allowNull: false,
       type: DataTypes.INTEGER,
       references: {
-        model: "Categories",
+        model: "Chats",
         key: "id"
       },
       onDelete: "CASCADE"
     },
-    question: {
+    title: {
       allowNull: false,
       type: DataTypes.TEXT
     },
-    answer: {
+    role: {
       allowNull: false,
       type: DataTypes.TEXT
     },
-    rate: {
+    version: {
+      allowNull: false,
+      type: DataTypes.TEXT
+    },
+    temperature: {
       allowNull: false,
       type: DataTypes.INTEGER
     },
   }, {
     sequelize,
-    modelName: 'Question',
+    modelName: 'ChatSetting',
   });
-  return Question;
+  return ChatSetting;
 };

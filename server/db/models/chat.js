@@ -3,12 +3,14 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Rate extends Model {
-    static associate({User}) {
+  class Chat extends Model {
+    static associate({User, ChatSetting, ChatHistory}) {
       this.belongsTo(User, {foreignKey: 'user_id'})
+      this.hasOne(ChatSetting, {foreignKey: 'chat_id'})
+      this.hasMany(ChatHistory, {foreignKey: 'chat_id'})
     }
   }
-  Rate.init({
+  Chat.init({
     user_id: {
       allowNull: false,
       type: DataTypes.INTEGER,
@@ -18,13 +20,9 @@ module.exports = (sequelize, DataTypes) => {
       },
       onDelete: "CASCADE"
     },
-    total: {
-      allowNull: false,
-      type: DataTypes.INTEGER,
-      },
   }, {
     sequelize,
-    modelName: 'Rate',
+    modelName: 'Chat',
   });
-  return Rate;
+  return Chat;
 };
