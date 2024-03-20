@@ -1,8 +1,8 @@
 const express = require('express');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
-const sessionConfig = require('../config/sessionConfig.js');
 const cors = require('cors');
+const sessionConfig = require('./sessionConfig');
 
 const corsOption = {
   origin: 'http://localhost:5173',

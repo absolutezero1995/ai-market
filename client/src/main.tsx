@@ -7,9 +7,14 @@ import { Provider } from "react-redux";
 import store from "./store/store.ts";
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
+ReactDOM.createRoot(document.getElementById('root')!).render(
   <BrowserRouter>
     <Provider store={store}>
       <App />
     </Provider>
+    <Provider store={store}>
+      <App />
+    </Provider>
   </BrowserRouter>
+)
 )
