@@ -45,7 +45,7 @@ const chatSlice = createSlice({
       state.input = action.payload;
     },
     setView: (state, action) => {
-      state.view = {...action.payload, };
+      state.view = [action.payload, action.payload.content];
     }
   },
   extraReducers: (builder) => {
