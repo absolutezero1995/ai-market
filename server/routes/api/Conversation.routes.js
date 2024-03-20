@@ -19,6 +19,8 @@ router.post('/', async (req, res) => {
       messages: [{ role: 'assistant', content: message }],
     });
     console.log('20', chatCompletion.choices[0].message);
+
+    // Запись в бд истории
     res.send(chatCompletion.choices[0].message);
   } catch (error) {
     console.log('[conversation.route]', error);

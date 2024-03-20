@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 import './Navigation.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faToggleOff } from '@fortawesome/free-solid-svg-icons';
@@ -16,6 +16,7 @@ function Navigation() {
   }
 
   return (
+    <>
     <div className='block-menu'>
     <nav className="nav-menu">
       <ul className='ul-list'>
@@ -23,12 +24,12 @@ function Navigation() {
         <div className='block-light'><FontAwesomeIcon icon={faToggleOff} /></div>
       </li>
       <li>
-        <Link to="/main" >Main</Link>
+        <Link to="/" >home</Link>
       </li>
       {isAuthenticated ? (
       <>
       <li>
-        <Link to="/main">Chat</Link>
+        <Link to="/chat">Chat</Link>
       </li>
       <li>
         <Link to="/account">Sign-out</Link>
@@ -37,10 +38,10 @@ function Navigation() {
       ) : (
       <>
       <li>
-        <Link to="/sign-in">Sign-in</Link>
+        <Link to="/sign-in">sign-in</Link>
       </li>
       <li>
-        <Link to="/sign-up">Sign-up</Link>
+        <Link to="/sign-up">sign-up</Link>
       </li>
       </>
       )
@@ -48,6 +49,8 @@ function Navigation() {
       </ul>
     </nav>
     </div>
+    <Outlet />
+    </>
   )
 }
 

@@ -9,7 +9,11 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   ChatHistory.init({
-    text: {
+    request: {
+      allowNull: false,
+      type: DataTypes.TEXT
+    },
+    responce: {
       allowNull: false,
       type: DataTypes.TEXT
     },

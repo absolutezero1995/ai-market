@@ -37,10 +37,13 @@ export const register = createAsyncThunk(
   'auth/register',
   async (userData: User, { rejectWithValue }) => {
     try {
-      return await makeRequest<AuthResponseType>('/api/users/register', {
+      const res = await makeRequest<AuthResponseType>('/api/signup', {
         method: 'POST',
         data: userData
       })
+      console.log(res, 'authSlice44')
+      return res;
+      
     } catch (error) {
       if (error instanceof Error) {
         return rejectWithValue(error.message)
@@ -128,6 +131,7 @@ function resetState(state: AuthState) {
 
 function updateStateWithSuccessData(state: AuthState, payload: AuthResponseType) {
   state.status = 'succeeded'
+  console.log('11111111111111111');
   state.isAuthenticated = true
   state.error = null
   state.message = payload.message

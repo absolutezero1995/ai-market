@@ -18,7 +18,11 @@ module.exports = {
         },
         onDelete: "CASCADE"
       },
-      text: {
+      request: {
+        allowNull: false,
+        type: Sequelize.TEXT
+      },
+      responce: {
         allowNull: false,
         type: Sequelize.TEXT
       },
