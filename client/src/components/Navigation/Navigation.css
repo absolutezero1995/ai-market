@@ -1,13 +1,19 @@
+.block-menu{
+    position: absolute;
+    right: 200px;
+    z-index: 5;
+}
+
 .nav-menu{
- position: absolute;
- top: 15px;
- right: 250px;
+    width: 100%;
+    top: 15px;
+    right: 250px;
 }
 
 .ul-list {
     width: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: right;
     align-items: center;
     text-decoration: none;
     list-style: none;
@@ -27,3 +33,4 @@
     cursor: pointer;
     margin-right: 15px;
 }
+

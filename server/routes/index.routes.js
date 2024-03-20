@@ -3,6 +3,6 @@ const Conversation = require("./api/Conversation.routes.js"); // Указыва�
 
 const router = express.Router();
 
-router.use('/conversation', Conversation);
+router.use('/api/conversation', Conversation);
 
 module.exports = router;
