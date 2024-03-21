@@ -31,7 +31,6 @@ export const sendMessage = createAsyncThunk(
         method: 'POST',
         data: { message }
       });
-      console.log(data.content, "data-content")
       return data.content;
     } catch (error) {
       throw rejectWithValue(error);
