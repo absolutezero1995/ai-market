@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import "./Chat.css"
 import { useState } from "react";
-function Chat() {
+function Chat(): JSX.Element {
     const [leftBarVisible, setLeftBarVisible] = useState(true);
     const [rightBarVisible, setRightBarVisible] = useState(true);
     const toggleLeftBar = () => {
@@ -18,9 +18,10 @@ function Chat() {
 
     return(
         <div className="block-chat">
+
             <div className="block-left">
                 {leftBarVisible && <LeftBar visible={leftBarVisible} />}
-                <span className="icon-bar" onClick={toggleLeftBar}>{leftBarVisible ? <FontAwesomeIcon icon={faChevronRight} /> : <FontAwesomeIcon icon={faChevronLeft} />}</span>
+                <span className="icon-bar" onClick={toggleLeftBar}>{leftBarVisible ? <FontAwesomeIcon icon={faChevronLeft} /> : <FontAwesomeIcon icon={faChevronRight} />}</span>
             </div>
             
             <div className="chat-search"> 
@@ -29,10 +30,14 @@ function Chat() {
                         <Table />
                     </div>
                 </div>
-                <span className="icon-bar" onClick={toggleRightBar}>{rightBarVisible ? <FontAwesomeIcon icon={faChevronLeft} /> : <FontAwesomeIcon icon={faChevronRight} />}</span>
             </div>
-             
+            
+            <div className="block-right">
+            <span className="icon-bar" onClick={toggleRightBar}>{rightBarVisible ? <FontAwesomeIcon icon={faChevronRight} /> : <FontAwesomeIcon icon={faChevronLeft} />}</span>
+             <div className="content-right">
                 {rightBarVisible && <RightBar visibleR={rightBarVisible} />}
+            </div>
+            </div>
         </div>
     )
 }

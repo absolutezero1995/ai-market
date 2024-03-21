@@ -1,15 +1,40 @@
 .block-right-bar{
-    width: 15%;
-    height: 100vh;
-    animation-duration: 1s; /* Длительность анимации */
-    animation-name: hideRightBar;
+    width: 100%;
+}
+
+.openR{
+    width: 100%;
+    animation-duration: 1s;
+    animation-name: slideInRight;
+}
+.closeR {
+    animation-name: slideOutRight;
+    animation-direction: reverse;
 }
 
 @keyframes hideRightBar {
     from {
-        width: 0; /* Начальная ширина */
+        width: 0;
     }
     to {
-        width: 15%; /* Конечная ширина */
+        width: 100%;
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+@keyframes slideOutRight {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
     }
 }

@@ -1,13 +1,12 @@
 .block-menu{
     position: absolute;
-    right: 200px;
+    right: 250px;
     z-index: 5;
 }
 
 .nav-menu{
     width: 100%;
     top: 15px;
-    right: 250px;
 }
 
 .ul-list {
@@ -17,7 +16,7 @@
     align-items: center;
     text-decoration: none;
     list-style: none;
-    gap: 50px;
+    gap: 10px;
 }
 
 .ul-list > li {

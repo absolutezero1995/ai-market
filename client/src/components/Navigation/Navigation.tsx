@@ -12,7 +12,7 @@ function Navigation() {
 
   const handleLogout = () => {
     dispatch(logout())
-    navigate('/login')
+    navigate('/sign-in')
   }
 
   return (
@@ -32,7 +32,7 @@ function Navigation() {
         <Link to="/chat">Chat</Link>
       </li>
       <li>
-        <Link to="/account">Sign-out</Link>
+        <button onClick={handleLogout}>Sign-out</button>
       </li>
       </>
       ) : (
