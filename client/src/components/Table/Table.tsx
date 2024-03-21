@@ -81,7 +81,7 @@ function Table() {
   const [textarea, setTextarea] = useState<string>('');
 >>>>>>> dda5c4ed5ef6dc165a83323b86d46baf19e00c5a
   const [views, setViews] = useState<string[]>([]);
-
+  console.log(views);
   const handleOnChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTextarea(e.target.value.replace(/^\s+/g, ''));
   }
@@ -95,9 +95,14 @@ function Table() {
       setInput('');
 =======
       const res = await dispatch(sendMessage(textarea));
+<<<<<<< HEAD
       setViews(prevViews => [...prevViews, res.payload as string]);
       dispatch(saveMessage({ message: textarea, content: res.payload }));
 >>>>>>> dda5c4ed5ef6dc165a83323b86d46baf19e00c5a
+=======
+        setViews(prevViews => [...prevViews, res.payload as string]);
+        dispatch(saveMessage({ message: textarea, content: res.payload as string }));
+>>>>>>> 11a0cdf14687070b217a1e3c66e15b960ed90fc0
     } catch (e) {
       console.log(e);
     }

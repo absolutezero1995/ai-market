@@ -18,9 +18,10 @@ function Chat(): JSX.Element {
 
     return(
         <div className="block-chat">
+
             <div className="block-left">
                 {leftBarVisible && <LeftBar visible={leftBarVisible} />}
-                <span className="icon-bar" onClick={toggleLeftBar}>{leftBarVisible ? <FontAwesomeIcon icon={faChevronRight} /> : <FontAwesomeIcon icon={faChevronLeft} />}</span>
+                <span className="icon-bar" onClick={toggleLeftBar}>{leftBarVisible ? <FontAwesomeIcon icon={faChevronLeft} /> : <FontAwesomeIcon icon={faChevronRight} />}</span>
             </div>
             
             <div className="chat-search"> 
@@ -29,9 +30,17 @@ function Chat(): JSX.Element {
                         <Table />
                     </div>
                 </div>
-                <span className="icon-bar" onClick={toggleRightBar}>{rightBarVisible ? <FontAwesomeIcon icon={faChevronLeft} /> : <FontAwesomeIcon icon={faChevronRight} />}</span>
             </div>
+<<<<<<< HEAD
+=======
+            
+            <div className="block-right">
+            <span className="icon-bar" onClick={toggleRightBar}>{rightBarVisible ? <FontAwesomeIcon icon={faChevronRight} /> : <FontAwesomeIcon icon={faChevronLeft} />}</span>
+             <div className="content-right">
+>>>>>>> 11a0cdf14687070b217a1e3c66e15b960ed90fc0
                 {rightBarVisible && <RightBar visibleR={rightBarVisible} />}
+            </div>
+            </div>
         </div>
     )
 }
