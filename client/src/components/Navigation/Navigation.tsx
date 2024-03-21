@@ -20,9 +20,9 @@ function Navigation() {
     <div className='block-menu'>
     <nav className="nav-menu">
       <ul className='ul-list'>
-      <li>
-        <div className='block-light'><FontAwesomeIcon icon={faToggleOff} /></div>
-      </li>
+        <li>
+          <div className='block-light'><FontAwesomeIcon icon={faToggleOff} /></div>
+        </li>
       <li>
         <Link to="/" >home</Link>
       </li>
@@ -38,10 +38,7 @@ function Navigation() {
       ) : (
       <>
       <li>
-        <Link to="/sign-in">sign-in</Link>
-      </li>
-      <li>
-        <Link to="/sign-up">sign-up</Link>
+        <Link to="/sign-in">enter</Link>
       </li>
       </>
       )

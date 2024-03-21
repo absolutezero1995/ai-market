@@ -1,10 +1,10 @@
-.block-menu{
+.block-menu {
     position: absolute;
     right: 200px;
     z-index: 5;
 }
 
-.nav-menu{
+.nav-menu {
     width: 100%;
     top: 15px;
     right: 250px;
@@ -22,16 +22,24 @@
 
 .ul-list > li {
     cursor: pointer;
-    font-size: 24px;
-    font-family: "Inter", sans-serif;
-    font-weight: 400;
+    font-size: 28px; /* Увеличиваем размер шрифта */
+    font-family: "Arial", sans-serif; /* Изменяем шрифт */
+    font-weight: 600; /* Увеличиваем жирность шрифта */
     font-style: normal;
+    transition: color 0.3s ease; /* Плавный переход для цвета текста */
 }
 
+.ul-list > li:hover {
+    color: #8b00ff; /* Изменяем цвет текста при наведении */
+}
 
-.block-light{
-    font-size: 25px;
+.block-light {
+    font-size: 30px; /* Увеличиваем размер шрифта */
     cursor: pointer;
     margin-right: 15px;
+    transition: color 0.3s ease; /* Плавный переход для цвета текста */
 }
 
+.block-light:hover {
+    color: #8b00ff; /* Изменяем цвет текста при наведении */
+}

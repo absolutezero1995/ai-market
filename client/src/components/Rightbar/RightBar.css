@@ -1,15 +1,65 @@
-.block-right-bar{
-    width: 15%;
+.block-right-bar {
+    width: 0; /* Изначально панель скрыта */
     height: 100vh;
-    animation-duration: 1s; /* Длительность анимации */
-    animation-name: hideRightBar;
+    overflow: hidden; /* Скрываем содержимое при изменении ширины */
+    transition: width 0.5s ease-in-out; /* Плавное изменение ширины с продолжительностью 0.5 секунды */
 }
 
-@keyframes hideRightBar {
-    from {
-        width: 0; /* Начальная ширина */
-    }
-    to {
-        width: 15%; /* Конечная ширина */
-    }
+.block-right-bar.visible {
+    width: 15%; /* Показываем панель при добавлении класса .visible */
+}
+
+.block-right-bar-content {
+    overflow-y: auto; /* Включаем вертикальную прокрутку при необходимости */
+    height: 100%; /* Занимаем все доступное пространство */
+}
+
+.block-navbar {
+    background-color: #f0f0f0; /* Цвет фона панели */
+    padding: 20px;
+}
+
+.block-navbar p {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.block-navbar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.block-navbar li {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.hide-button {
+    background-color: gray; /* Цвет кнопки */
+    color: white; /* Цвет текста кнопки */
+    border: none; /* Убираем рамку */
+    padding: 10px 20px; /* Отступы внутри кнопки */
+    cursor: pointer; /* Изменяем курсор при наведении */
+    transition: background-color 0.3s; /* Плавное изменение цвета фона при ховере */
+}
+
+.hide-button:hover {
+    background-color: #6a5acd; /* Фиолетовый цвет фона при ховере */
+}
+
+
+/* Пользовательские стили для полосы прокрутки */
+.block-right-bar-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.block-right-bar-content::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 4px;
+}
+
+.block-right-bar-content::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
 }

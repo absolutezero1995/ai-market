@@ -2,6 +2,7 @@ import { ChangeEvent, FormEvent, useState } from 'react'
 import { useAppDispatch } from '../../hooks/redux.ts'
 import { login } from '../../features/auth/authSlice.ts'
 import { useLocation, useNavigate } from 'react-router-dom'
+import './Signin.css';
 
 const Signin = () => {
     const [credentials, setCredentials] = useState({ email: '', password: '' })
@@ -24,14 +25,14 @@ const Signin = () => {
     }
 
     return (
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4 mt-2.5">
+        <form onSubmit={handleSubmit} className="form-container">
             <input
                 type="email"
                 name="email"
                 placeholder="Email"
                 value={credentials.email}
                 onChange={handleChange}
-                className="border-2 border-gray-300 p-2 rounded-md"
+                className="form-input"
             />
             <input
                 type="password"
@@ -39,9 +40,9 @@ const Signin = () => {
                 placeholder="Password"
                 value={credentials.password}
                 onChange={handleChange}
-                className="border-2 border-gray-300 p-2 rounded-md"
+                className="form-input"
             />
-            <button type="submit" className="border-2 border-gray-300 p-2 rounded-md bg-gray-300">
+            <button type="submit" className="form-button">
                 Login
             </button>
         </form>

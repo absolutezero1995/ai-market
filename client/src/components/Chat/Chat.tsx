@@ -16,14 +16,14 @@ function Chat() {
     };
 
 
-    return(
+    return (
         <div className="block-chat">
             <div className="block-left">
                 {leftBarVisible && <LeftBar visible={leftBarVisible} />}
                 <span className="icon-bar" onClick={toggleLeftBar}>{leftBarVisible ? <FontAwesomeIcon icon={faChevronRight} /> : <FontAwesomeIcon icon={faChevronLeft} />}</span>
             </div>
-            
-            <div className="chat-search"> 
+
+            <div className="chat-search">
                 <div className="chat">
                     <div className="chat-position">
                         <Table />
@@ -31,8 +31,8 @@ function Chat() {
                 </div>
                 <span className="icon-bar" onClick={toggleRightBar}>{rightBarVisible ? <FontAwesomeIcon icon={faChevronLeft} /> : <FontAwesomeIcon icon={faChevronRight} />}</span>
             </div>
-             
-                {rightBarVisible && <RightBar visibleR={rightBarVisible} />}
+
+            {rightBarVisible && <RightBar visibleR={rightBarVisible} />}
         </div>
     )
 }
