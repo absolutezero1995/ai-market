@@ -23,6 +23,7 @@ const initialState: ChatState = {
   error: null
 };
 
+
 export const sendMessage = createAsyncThunk(
   'chat/sendMessage',
   async (message: string, { rejectWithValue }) => {
