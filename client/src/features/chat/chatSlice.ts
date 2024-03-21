@@ -16,6 +16,13 @@ interface ChatState {
   error: string | null;
 }
 
+interface SetSetting {
+  model: string;
+  chat_id: number;
+  temperature: number;
+  role: string;
+}
+
 const initialState: ChatState = {
   messages: [],
   view: [],
@@ -47,6 +54,8 @@ export const getHistoryChat = createAsyncThunk(
       const data: MessageResponse[] = await makeRequest<MessageResponse[]>(`/api/getHistoryChat/${chat_id.chat_id}`, {
         method: "GET",
       })
+      console.log(data);
+
       return data.map(messages => messages.content)
     } catch (error) {
       throw rejectWithValue(error)
@@ -70,14 +79,25 @@ export const saveMessage = createAsyncThunk(
   }
 );
 
+export const setSettingOfChat = createAsyncThunk(
+  'chat/setSettingOfChat',
+  async (settings: SetSetting, { rejectWithValue }) => {
+    try {
+      const data: string = await makeRequest<string>(`/api/setSettingOfChat/${settings.chat_id}`, {
+        method: "POST",
+        data: { settings }
+      })
+      return data
+    } catch (error) {
+      throw rejectWithValue(error)
+    }
+  }
+)
+
 const chatSlice = createSlice({
   name: 'chat',
   initialState,
   reducers: {
-    // receiveMessage(state, action) {
-    //   state.messages.push(action.payload);
-    //   state.view = [action.payload];
-    // }
   },
   extraReducers: (builder) => {
     builder
@@ -116,7 +136,19 @@ const chatSlice = createSlice({
       .addCase(saveMessage.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.payload as string;
+      })
+      .addCase(setSettingOfChat.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(setSettingOfChat.fulfilled, (state) => {
+        state.status = 'success';
+      })
+      .addCase(setSettingOfChat.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload as string;
       });
+
+
   }
 });
 

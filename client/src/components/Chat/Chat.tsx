@@ -31,13 +31,10 @@ function Chat(): JSX.Element {
                     </div>
                 </div>
             </div>
-<<<<<<< HEAD
-=======
             
             <div className="block-right">
             <span className="icon-bar" onClick={toggleRightBar}>{rightBarVisible ? <FontAwesomeIcon icon={faChevronRight} /> : <FontAwesomeIcon icon={faChevronLeft} />}</span>
              <div className="content-right">
->>>>>>> 11a0cdf14687070b217a1e3c66e15b960ed90fc0
                 {rightBarVisible && <RightBar visibleR={rightBarVisible} />}
             </div>
             </div>

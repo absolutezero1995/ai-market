@@ -65,21 +65,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import "./Table.css";
 
-<<<<<<< HEAD
-import { sendMessage } from '../../features/chat/chatSlice';
-=======
 import { saveMessage, sendMessage } from '../../features/chat/chatSlice';
->>>>>>> dda5c4ed5ef6dc165a83323b86d46baf19e00c5a
 import { useAppDispatch } from '../../hooks/redux';
 import { useState } from 'react';
 
 function Table() {
   const dispatch = useAppDispatch();
-<<<<<<< HEAD
-  const [input, setInput] = useState<string>('');
-=======
   const [textarea, setTextarea] = useState<string>('');
->>>>>>> dda5c4ed5ef6dc165a83323b86d46baf19e00c5a
   const [views, setViews] = useState<string[]>([]);
   console.log(views);
   const handleOnChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -88,21 +80,9 @@ function Table() {
 
   const messageChatGPT = async () => {
     try {
-<<<<<<< HEAD
-      const res = await dispatch(sendMessage(input));
-      console.log(res, 'TABLE92');
-      setViews(prevViews => [...prevViews, res.payload as string]);
-      setInput('');
-=======
       const res = await dispatch(sendMessage(textarea));
-<<<<<<< HEAD
-      setViews(prevViews => [...prevViews, res.payload as string]);
-      dispatch(saveMessage({ message: textarea, content: res.payload }));
->>>>>>> dda5c4ed5ef6dc165a83323b86d46baf19e00c5a
-=======
         setViews(prevViews => [...prevViews, res.payload as string]);
         dispatch(saveMessage({ message: textarea, content: res.payload as string }));
->>>>>>> 11a0cdf14687070b217a1e3c66e15b960ed90fc0
     } catch (e) {
       console.log(e);
     }

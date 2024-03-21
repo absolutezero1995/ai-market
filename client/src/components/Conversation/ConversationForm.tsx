@@ -1,21 +1,30 @@
 import React, { useState } from "react";
+import { useAppDispatch } from "../../hooks/redux";
+import { setSettingOfChat } from "../../features/chat/chatSlice";
 
 function ConversationForm(): JSX.Element {
   const [model, setModel] = useState("gpt-3.5-turbo");
   const [temperature, setTemperature] = useState(0.7);
   const [role, setRole] = useState("default");
+  const dispatch = useAppDispatch();
 
-  const handleOnForm = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleOnForm = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    try {
+      await dispatch(setSettingOfChat(({ chat_id: 0, model, temperature, role})))
+    } catch (error) {
+      console.log(error);
+
+    }
   };
   return (
     <form onSubmit={handleOnForm}>
-        <label>Model</label>
-        <br />
-        <select value={model} onChange={(e) => setModel(e.target.value)}>
-          <option value="gpt 3.5-turbo">GPT 3.5-TURBO</option>
-          <option value="gpt 4">GPT 4</option>
-        </select>
+      <label>Model</label>
+      <br />
+      <select value={model} onChange={(e) => setModel(e.target.value)}>
+        <option value="gpt 3.5-turbo">GPT 3.5-TURBO</option>
+        <option value="gpt 4">GPT 4</option>
+      </select>
       <label>
         Temperature
         <input
