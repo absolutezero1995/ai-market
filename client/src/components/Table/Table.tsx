@@ -81,8 +81,8 @@ function Table() {
   const messageChatGPT = async () => {
     try {
       const res = await dispatch(sendMessage(textarea));
-      setViews(prevViews => [...prevViews, res.payload as string]);
-      dispatch(saveMessage({ message: textarea, content: res.payload }));
+        setViews(prevViews => [...prevViews, res.payload as string]);
+        dispatch(saveMessage({ message: textarea, content: res.payload as string }));
     } catch (e) {
       console.log(e);
     }
