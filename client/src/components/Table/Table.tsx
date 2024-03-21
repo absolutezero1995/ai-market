@@ -65,39 +65,59 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import "./Table.css";
 
+<<<<<<< HEAD
 import { sendMessage } from '../../features/chat/chatSlice';
+=======
+import { saveMessage, sendMessage } from '../../features/chat/chatSlice';
+>>>>>>> dda5c4ed5ef6dc165a83323b86d46baf19e00c5a
 import { useAppDispatch } from '../../hooks/redux';
 import { useState } from 'react';
 
 function Table() {
   const dispatch = useAppDispatch();
+<<<<<<< HEAD
   const [input, setInput] = useState<string>('');
+=======
+  const [textarea, setTextarea] = useState<string>('');
+>>>>>>> dda5c4ed5ef6dc165a83323b86d46baf19e00c5a
   const [views, setViews] = useState<string[]>([]);
 
-
-  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInput(e.target.value);
+  const handleOnChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setTextarea(e.target.value.replace(/^\s+/g, ''));
   }
 
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      setViews([...views, input])
-      handleSend();
-    }
-  }
-  
-  const handleSend = async () => {
+  const messageChatGPT = async () => {
     try {
+<<<<<<< HEAD
       const res = await dispatch(sendMessage(input));
       console.log(res, 'TABLE92');
       setViews(prevViews => [...prevViews, res.payload as string]);
       setInput('');
+=======
+      const res = await dispatch(sendMessage(textarea));
+      setViews(prevViews => [...prevViews, res.payload as string]);
+      dispatch(saveMessage({ message: textarea, content: res.payload }));
+>>>>>>> dda5c4ed5ef6dc165a83323b86d46baf19e00c5a
     } catch (e) {
       console.log(e);
     }
   }
 
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if(textarea.length !== 0){
+      if (e.key === 'Enter') {
+        setViews([...views, textarea])
+        messageChatGPT();
+        setTextarea('');
+      }
+    }
+  }
 
+  const handleSend = () => {
+    setViews([...views, textarea])
+    messageChatGPT();
+    setTextarea('');
+  }
 
   return (
     <div>
@@ -105,8 +125,8 @@ function Table() {
         <div key={i}>{el}</div>
       ))}
       <div className="block-search">
-        <input className="input-search" placeholder="Введите ваш запрос..." type='text' value={input} onChange={handleOnChange} onKeyPress={handleKeyPress} />
-        <button className="btn-search" type='button' onClick={handleSend}><FontAwesomeIcon icon={faPaperPlane} /></button>
+        <textarea className="textarea-search" placeholder="Введите ваш запрос..." value={textarea} onChange={handleOnChange} onKeyPress={handleKeyPress} />
+        <button className="btn-search" type='button' onClick={handleSend} disabled={textarea.length === 0}><FontAwesomeIcon icon={faPaperPlane} /></button>
       </div>
     </div>
   );

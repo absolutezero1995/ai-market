@@ -12,7 +12,7 @@ interface ChatId {
 interface ChatState {
   messages: string[];
   view: string[];
-  status: 'idle' | 'loading' | 'succeded' | 'failed';
+  status: 'idle' | 'loading' | 'success' | 'failed';
   error: string | null;
 }
 
@@ -31,6 +31,7 @@ export const sendMessage = createAsyncThunk(
         method: 'POST',
         data: { message }
       });
+      console.log(message, data.content)
       return data.content;
     } catch (error) {
       throw rejectWithValue(error);
@@ -52,10 +53,31 @@ export const getHistoryChat = createAsyncThunk(
   }
 )
 
+export const saveMessage = createAsyncThunk(
+  'chat/saveMessage',
+  async ({ message, content }: { message: string, content: string }, { rejectWithValue }) => {
+    try {
+      const data: MessageResponse = await makeRequest<MessageResponse>("/api/saveMessage", {
+        method: 'POST',
+        data: { message, content }
+      });
+      console.log(data);
+      return data.content;
+    } catch (error) {
+      throw rejectWithValue(error);
+    }
+  }
+);
+
 const chatSlice = createSlice({
   name: 'chat',
   initialState,
-  reducers: {},
+  reducers: {
+    // receiveMessage(state, action) {
+    //   state.messages.push(action.payload);
+    //   state.view = [action.payload];
+    // }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(sendMessage.pending, (state) => {
@@ -63,9 +85,8 @@ const chatSlice = createSlice({
       })
       .addCase(sendMessage.fulfilled, (state, action) => {
         state.messages.push(action.payload);
-        console.log(action.payload);
         state.view = [action.payload];
-        state.status = 'succeded';
+        state.status = 'success';
       })
       .addCase(sendMessage.rejected, (state, action) => {
         state.status = 'failed';
@@ -75,7 +96,7 @@ const chatSlice = createSlice({
         state.status = "loading";
       })
       .addCase(getHistoryChat.fulfilled, (state, action) => {
-        state.status = "succeded";
+        state.status = "success";
         state.messages = action.payload
         state.error = null
       })
@@ -83,9 +104,19 @@ const chatSlice = createSlice({
         state.status = "failed";
         state.error = action.payload as string;
       })
+      .addCase(saveMessage.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(saveMessage.fulfilled, (state, action) => {
+        // state.messages.push(action.payload);
+        state.view = [action.payload];
+        state.status = 'success';
+      })
+      .addCase(saveMessage.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload as string;
+      });
   }
 });
 
-
 export default chatSlice.reducer;
-

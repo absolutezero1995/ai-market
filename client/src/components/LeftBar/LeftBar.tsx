@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./Leftbar.css"
-import ConversationForm from "../Conversation/ConversationForm";
 import Conversation from "../Conversation/Conversation";
+import ConversationForm from "../Conversation/ConversationForm";
 
 interface visibleProps {
     visible: boolean;
