@@ -73,7 +73,7 @@ function Table() {
   const dispatch = useAppDispatch();
   const [textarea, setTextarea] = useState<string>('');
   const [views, setViews] = useState<string[]>([]);
-  console.log(views);
+
   const handleOnChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTextarea(e.target.value.replace(/^\s+/g, ''));
   }
