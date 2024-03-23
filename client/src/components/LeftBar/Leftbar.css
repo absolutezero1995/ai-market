@@ -1,20 +1,16 @@
 .block-left-bar {
     width: 100%;
-}
-
-.open{
-    width: 100%;
-    animation-duration: 1s;
-    animation-name: slideIn;
-}
-.close {
-    animation-name: slideOut;
-}
-
-.block-navbar {
     background: #cbc8db;
     height: 100vh;
-    display: block;
+    overflow: hidden;
+    animation-duration: 0.5s;
+    animation-name: slideIn;
+}
+
+.hidden {
+    width: 0;
+    animation-duration: 0.5s;
+    animation-name: slideOut;
 }
 
 .block-navbar > p {
@@ -22,6 +18,10 @@
     text-align: center;
     padding: 20px 0 10px 0;
     font-weight: 600;
+}
+
+.block-navbar button{
+    cursor: pointer;
 }
 
 .block-navbar ul {
@@ -34,23 +34,14 @@
 }
 
 .block-navbar ul > li {
-    margin: 10px 0;
+    margin: 2px 0;
+    padding: 10px 0;
 }
 
 p{
     margin: 0;
     padding: 0;
 }
-
-/* @keyframes hideLeftBar {
-    from {
-        width: 0;
-    }
-    to {
-        width: 100%;
-    }
-} */
-
 
 @keyframes slideIn {
     from {

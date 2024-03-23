@@ -58,12 +58,25 @@ export const saveMessage = createAsyncThunk(
   'chat/saveMessage',
   async ({ message, content }: { message: string, content: string }, { rejectWithValue }) => {
     try {
-      const data: MessageResponse = await makeRequest<MessageResponse>("/api/saveMessage", {
+      await makeRequest<MessageResponse>("/api/saveMessage", {
         method: 'POST',
         data: { message, content }
       });
-      console.log(data);
-      return data.content;
+    } catch (error) {
+      throw rejectWithValue(error);
+    }
+  }
+);
+
+export const deleteMessage = createAsyncThunk(
+  'chat/deleteMessage',
+  async (index: number, { rejectWithValue}) => {
+    try {
+      await makeRequest<void>(`/api/deleteMessage/${index}`, {
+        method: 'DELETE',
+        data: { index }
+      });
+      return index;
     } catch (error) {
       throw rejectWithValue(error);
     }
@@ -73,12 +86,7 @@ export const saveMessage = createAsyncThunk(
 const chatSlice = createSlice({
   name: 'chat',
   initialState,
-  reducers: {
-    // receiveMessage(state, action) {
-    //   state.messages.push(action.payload);
-    //   state.view = [action.payload];
-    // }
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(sendMessage.pending, (state) => {
@@ -86,7 +94,7 @@ const chatSlice = createSlice({
       })
       .addCase(sendMessage.fulfilled, (state, action) => {
         state.messages.push(action.payload);
-        state.view = [action.payload];
+        state.view = [...state.messages];
         state.status = 'success';
       })
       .addCase(sendMessage.rejected, (state, action) => {
@@ -98,8 +106,8 @@ const chatSlice = createSlice({
       })
       .addCase(getHistoryChat.fulfilled, (state, action) => {
         state.status = "success";
-        state.messages = action.payload
-        state.error = null
+        state.messages = action.payload;
+        state.error = null;
       })
       .addCase(getHistoryChat.rejected, (state, action) => {
         state.status = "failed";
@@ -108,18 +116,26 @@ const chatSlice = createSlice({
       .addCase(saveMessage.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(saveMessage.fulfilled, (state, action) => {
-        // state.messages.push(action.payload);
-        state.view = [action.payload];
+      .addCase(saveMessage.fulfilled, (state) => {
         state.status = 'success';
       })
       .addCase(saveMessage.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.payload as string;
+      })
+      .addCase(deleteMessage.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(deleteMessage.fulfilled, (state, action) => {
+        state.status = 'success';
+        state.view = state.view.filter((_, index) => index !== action.payload);
+        console.log('Deleted message index:', state.view);
+      })
+      .addCase(deleteMessage.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload as string || 'An error occurred';
       });
-  }
+  },
 });
-
-// export const { receiveMessage } = chatSlice.actions;
 
 export default chatSlice.reducer;

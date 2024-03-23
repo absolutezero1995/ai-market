@@ -1,40 +1,42 @@
-.block-right-bar{
-    width: 100%;
+.block-right-bar {
+    background: #cbc8db;
+    height: 100vh;
+    overflow: hidden;
+    animation-duration: 0.5s;
+    animation-name: slideInR;
+    transition: 0.5s;
+    width: 15%;
 }
 
-.openR{
-    width: 100%;
-    animation-duration: 1s;
-    animation-name: slideInRight;
-}
-.closeR {
-    animation-name: slideOutRight;
-    animation-direction: reverse;
+.hiddenR {
+    width: 0;
+    transition: 0.5s;
+    animation-duration: 0.5s;
+    animation-name: slideOutR;
 }
 
-@keyframes hideRightBar {
+.content-navbar-right li {
+    cursor: pointer;
+}
+
+.content-navbar-right li:hover{
+    background: #aeabbb85;
+}
+
+@keyframes slideInR {
     from {
         width: 0;
     }
     to {
-        width: 100%;
+        width: 15%;
     }
 }
 
-@keyframes slideInRight {
+@keyframes slideOutR {
     from {
-        width: 0;
+        width: 15%;
     }
     to {
-        width: 100%;
-    }
-}
-
-@keyframes slideOutRight {
-    from {
         width: 0;
-    }
-    to {
-        width: 100%;
     }
 }

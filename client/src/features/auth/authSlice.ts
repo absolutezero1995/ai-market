@@ -57,7 +57,7 @@ export const login = createAsyncThunk(
   'auth/login',
   async (credentials: Omit<User, 'name'>, { rejectWithValue }) => {
     try {
-      return await makeRequest<AuthResponseType>('/api/users/login', {
+      return await makeRequest<AuthResponseType>('/api/signin', {
         method: 'POST',
         data: credentials
       })

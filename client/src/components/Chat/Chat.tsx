@@ -20,7 +20,7 @@ function Chat(): JSX.Element {
         <div className="block-chat">
 
             <div className="block-left">
-                {leftBarVisible && <LeftBar visible={leftBarVisible} />}
+                <LeftBar visible={leftBarVisible} />
                 <span className="icon-bar" onClick={toggleLeftBar}>{leftBarVisible ? <FontAwesomeIcon icon={faChevronLeft} /> : <FontAwesomeIcon icon={faChevronRight} />}</span>
             </div>
             
@@ -32,12 +32,8 @@ function Chat(): JSX.Element {
                 </div>
             </div>
             
-            <div className="block-right">
             <span className="icon-bar" onClick={toggleRightBar}>{rightBarVisible ? <FontAwesomeIcon icon={faChevronRight} /> : <FontAwesomeIcon icon={faChevronLeft} />}</span>
-             <div className="content-right">
-                {rightBarVisible && <RightBar visibleR={rightBarVisible} />}
-            </div>
-            </div>
+            <RightBar visibleR={rightBarVisible} />
         </div>
     )
 }

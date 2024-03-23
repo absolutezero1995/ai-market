@@ -1,33 +1,71 @@
-.block-search{
+.block-table {
+    margin: 5px 0;
+    overflow: hidden;
+}
+
+.block-table button{
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: gray;
+
+}
+
+.block-table button:first-of-type {
+    margin-right: 5px;
+}
+.block-search {
     display: flex;
     align-items: center;
     border: 1px solid gray;
     border-radius: 8px;
-    padding: 5px 10px;
     margin-top: 15px;
+    overflow: hidden;
 }
 
-.textarea-search{
+
+.textarea-search {
     width: 100%;
+    height: 22px;
+    background: none;
+    display: flex;
+    align-items: center;
+    line-height: 100%;
+    padding: 15px 50px 15px 10px;
     border: none;
-    line-height: 50%;
-    font-size: 18px;
-    margin-top: 7px;
-    margin-right: 15px;
+    resize: none;
+    font-size: 16px;
     cursor: pointer;
     overflow: hidden;
-    resize: none
 }
 
-.textarea-search:focus{
+.textarea-search:focus {
     outline: none;
 }
 
-.btn-search{
+.block-search .textarea-search::-webkit-scrollbar {
+    width: 6px;
+}
+
+.block-search .textarea-search::-webkit-scrollbar-thumb {
+    background-color: #d8d8d8;
+    border-radius: 5px;
+}
+
+.block-search textarea::-webkit-scrollbar-track {
+    background-color: inherit;
+    border-radius: 5px;
+}
+
+.btn-search {
+    position: absolute;
+    bottom: 8px;
+    right: 12px;
+    z-index: 5;
     padding: 10px;
     cursor: pointer;
     border: none;
     background: rgba(197, 197, 197, 0.384);
-    border-radius: 8px;
+    border-radius: 6px;
     font-size: 16px;
 }
