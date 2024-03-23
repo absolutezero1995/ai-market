@@ -73,16 +73,17 @@ function Table() {
   const dispatch = useAppDispatch();
   const [textarea, setTextarea] = useState<string>('');
   const [views, setViews] = useState<string[]>([]);
-  console.log(views);
+
   const handleOnChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTextarea(e.target.value.replace(/^\s+/g, ''));
   }
 
   const messageChatGPT = async () => {
     try {
-      const res = await dispatch(sendMessage(textarea));
+      console.log(views, 'views83')
+      const res = await dispatch(sendMessage({ message: textarea, messages: views }));
         setViews(prevViews => [...prevViews, res.payload as string]);
-        dispatch(saveMessage({ message: textarea, content: res.payload as string }));
+        dispatch(saveMessage({ message: textarea, messages: views , content: res.payload as string }));
     } catch (e) {
       console.log(e);
     }
@@ -92,6 +93,7 @@ function Table() {
     if(textarea.length !== 0){
       if (e.key === 'Enter') {
         setViews([...views, textarea])
+        console.log('!!!!!!!!!!!!!', views);
         messageChatGPT();
         setTextarea('');
       }

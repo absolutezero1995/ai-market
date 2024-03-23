@@ -33,11 +33,12 @@ const initialState: ChatState = {
 
 export const sendMessage = createAsyncThunk(
   'chat/sendMessage',
-  async (message: string, { rejectWithValue }) => {
+  async ({ message, messages }: { message: string, messages: ""[]}, { rejectWithValue }) => {
     try {
+      console.log(messages, 'messages38')
       const data: MessageResponse = await makeRequest<MessageResponse>("/api/conversation", {
         method: 'POST',
-        data: { message }
+        data: { message, messages }
       });
       console.log(message, data.content)
       return data.content;
@@ -54,8 +55,6 @@ export const getHistoryChat = createAsyncThunk(
       const data: MessageResponse[] = await makeRequest<MessageResponse[]>(`/api/getHistoryChat/${chat_id.chat_id}`, {
         method: "GET",
       })
-      console.log(data);
-
       return data.map(messages => messages.content)
     } catch (error) {
       throw rejectWithValue(error)
@@ -71,7 +70,6 @@ export const saveMessage = createAsyncThunk(
         method: 'POST',
         data: { message, content }
       });
-      console.log(data);
       return data.content;
     } catch (error) {
       throw rejectWithValue(error);

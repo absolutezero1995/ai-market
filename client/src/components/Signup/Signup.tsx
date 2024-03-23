@@ -5,21 +5,19 @@ import { useNavigate } from 'react-router-dom'
 
 const Signup = () => {
   const [formData, setFormData] = useState({ email: '', password: '', name: '' })
-
-  console.log(formData);
-
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
+  
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value })
+  }
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     await dispatch(register(formData))
-    navigate('/')
+    navigate('/chat')
   }
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
-  }
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4 mt-2.5">

@@ -1,26 +1,22 @@
 import { ChangeEvent, FormEvent, useState } from 'react'
 import { useAppDispatch } from '../../hooks/redux.ts'
 import { login } from '../../features/auth/authSlice.ts'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import './Signin.css';
 
 const Signin = () => {
-    const [credentials, setCredentials] = useState({ email: '', password: '' })
+    const [formData, setFormData] = useState({ email: '', password: '' })
     const dispatch = useAppDispatch()
-
-    const location = useLocation()
     const navigate = useNavigate()
 
-    // Показывает с какой страницы пришел пользователь, чтобы вернуть обратно после авторизации
-    const from = location.state?.from?.pathname || '/'
-
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setCredentials({ ...credentials, [e.target.name]: e.target.value })
+        setFormData({ ...formData, [e.target.name]: e.target.value })
     }
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        await dispatch(login(credentials))
-        navigate(from, { replace: true })
+        await dispatch(login(formData))
+        navigate('/chat')
     }
 
     return (
@@ -29,7 +25,7 @@ const Signin = () => {
                 type="email"
                 name="email"
                 placeholder="Email"
-                value={credentials.email}
+                value={formData.email}
                 onChange={handleChange}
                 className="border-2 border-gray-300 p-2 rounded-md"
             />
@@ -37,7 +33,7 @@ const Signin = () => {
                 type="password"
                 name="password"
                 placeholder="Password"
-                value={credentials.password}
+                value={formData.password}
                 onChange={handleChange}
                 className="border-2 border-gray-300 p-2 rounded-md"
             />

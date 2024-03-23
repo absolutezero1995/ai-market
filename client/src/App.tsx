@@ -8,10 +8,13 @@ import { Route, Routes } from 'react-router-dom';
 import Home from './components/Home/Home';
 import Signin from './components/Signin/Signin';
 import Signup from './components/Signup/Signup';
+import Error from './components/404/Error';
 
 function App() {
   const { isAuthenticated } = useAppSelector((store) => store.auth)
   const dispatch = useAppDispatch()
+
+
 
   useEffect(() => {
     const accessToken = localStorage.getItem('accessToken')
@@ -24,6 +27,8 @@ function App() {
   }, [dispatch])
 
 
+
+  
   return (
     <>
       <Navigation />
@@ -33,6 +38,7 @@ function App() {
           <Route path='/sign-in' element={<Signin />} />
           <Route path='/sign-up' element={<Signup />} />
           <Route path='/chat' element={<Chat />} />
+          <Route path='*' element={<Error />} />
         </Route>
 
       </Routes>

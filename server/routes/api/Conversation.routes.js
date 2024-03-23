@@ -11,14 +11,14 @@ const openai = new OpenAI({
 
 
 router.post('/', async (req, res) => {
-  const { message } = req.body;
-  console.log(message, '!!!!!!!!!!!');
+  console.log(req.body, 'req.body14');
+  const { message, messages } = req.body;
   try {
     const chatCompletion = await openai.chat.completions.create({
       model: 'gpt-3.5-turbo',
-      messages: [{ role: 'assistant', content: message }],
+      messages: [{ role: 'assistant', content: messages.length > 0 ? messages.join('\n') : message }],
     });
-    console.log('20', chatCompletion.choices[0].message);
+    // console.log('20', chatCompletion.choices[0].message);
 
     // Запись в бд истории
     res.send(chatCompletion.choices[0].message);

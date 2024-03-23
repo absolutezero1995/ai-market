@@ -41,9 +41,7 @@ export const register = createAsyncThunk(
         method: 'POST',
         data: userData
       })
-      console.log(res, 'authSlice44')
       return res;
-      
     } catch (error) {
       if (error instanceof Error) {
         return rejectWithValue(error.message)
@@ -57,10 +55,12 @@ export const login = createAsyncThunk(
   'auth/login',
   async (credentials: Omit<User, 'name'>, { rejectWithValue }) => {
     try {
-      return await makeRequest<AuthResponseType>('/api/users/login', {
+      console.log(credentials, 'credential60')
+      const res = await makeRequest<AuthResponseType>('/api/signin', {
         method: 'POST',
         data: credentials
       })
+      return res;
     } catch (error) {
       if (error instanceof Error) {
         return rejectWithValue(error.message)

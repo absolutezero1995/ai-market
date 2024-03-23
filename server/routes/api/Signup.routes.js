@@ -3,31 +3,26 @@ const bcrypt = require('bcrypt');
 const { User } = require('../../db/models');
 
 router.post('/', async (req, res) => {
-    const { email, password } = req.body;
-    console.log(email, 'SIGNUP 7')
-    const hash = await bcrypt.hash(password, 10);
-
     try {
-        const oldUser = await User.findOne({
-            where: { email },
-        });
+        const { name, email, password } = req.body;
 
-        if (oldUser) {
-            return res.status(401).json({ error: 'Email is already registered!' });
-        }
+        const existingUser = await User.findOne({ where: { email } });
 
-        const newUser = await User.create({
-            ...req.body,
-            password: hash,
-        });
-        if (newUser.id) {
+        if (!existingUser) {
+            const hashedPassword = await bcrypt.hash(password, 10);
+            const newUser = await User.create({
+                name,
+                email,
+                password: hashedPassword,
+            });
             req.session.userId = newUser.id;
-            return res.status(200).json({ text: 'OK' });
+            res.status(200).json({ message: "Success" });
+        } else {
+            res.status(400).json({ message: "User with this email already exists" });
         }
-        return res.status(500).json({ error: 'User cannot be created' });
     } catch (error) {
-        console.log('api/auth.routes.js / .post (error):', error);
-        return res.status(400).json({ error: error.message });
+        console.error("Error during signup:", error);
+        res.status(500).json({ message: "Internal Server Error" });
     }
 });
 
