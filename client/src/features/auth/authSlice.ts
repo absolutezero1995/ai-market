@@ -41,7 +41,6 @@ export const register = createAsyncThunk(
         method: 'POST',
         data: userData
       })
-      console.log(res, 'authSlice44')
       return res;
       
     } catch (error) {
@@ -131,7 +130,6 @@ function resetState(state: AuthState) {
 
 function updateStateWithSuccessData(state: AuthState, payload: AuthResponseType) {
   state.status = 'succeeded'
-  console.log('11111111111111111');
   state.isAuthenticated = true
   state.error = null
   state.message = payload.message

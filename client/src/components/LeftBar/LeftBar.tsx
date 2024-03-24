@@ -3,6 +3,8 @@ import "./Leftbar.css";
 import ConversationForm from "../Conversation/ConversationForm";
 import Conversation from "../Conversation/Conversation";
 import { useCategoryContext } from "../Rightbar/CategoryContext";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { fetchCategories, setSelectedCategory } from "../../features/categoty";
 
 interface visibleProps {
   visible: boolean;
@@ -15,37 +17,52 @@ interface ChatSettings {
 
 function LeftBar({ visible }: visibleProps): JSX.Element {
 
-  const { selectedCategory } = useCategoryContext()
+  // const  setSelectedCategory  = useCategoryContext()
+  // console.log(selectedCategory);
+  
 
+  const [originalChats, setOriginalChats] = useState<JSX.Element[]>([])
   const [chats, setChats] = useState<JSX.Element[]>([]);
   const [chatSettings, setChatSettings] = useState<ChatSettings[]>([]);
+  const dispatch = useAppDispatch();
+  const chatsCategory = useAppSelector((state) => state.chat)
+  
+  const selectedCategory = useAppSelector((state) => state.chats.selectedCategory);
+  const categoryChats = useAppSelector((state) => state.chats.chats[selectedCategory || ""]);
+
+
 
   const onHandleAddNewChat = () => {
     const newIndex = chats.length;
     const newChat = <Conversation key={newIndex} />;
     const newChatSettings = { index: newIndex, isOpen: false };
+    setOriginalChats((prevChats) => [...prevChats, newChat]);
     setChats((prevChats) => [...prevChats, newChat]);
     setChatSettings((prevSettings) => [...prevSettings, newChatSettings]);
+    if (selectedCategory === null) {
+      dispatch(setSelectedCategory("defaultCategory"));
+ // Замените "defaultCategory" на ваше значение по умолчанию
+    }
   };
 
   const toggleSetting = (index: number) => {
-    setChatSettings((prevSettings) =>
-      prevSettings.map((setting) =>
-        setting.index === index ? { ...setting, isOpen: !setting.isOpen } : setting
+    setChatSettings(prevSettings =>
+      prevSettings.map((setting, i) =>
+        i === index ? { ...setting, isOpen: !setting.isOpen } : setting
       )
     );
   };
 
-  ///???????????????????????????????????????????????????????????????
-//   useEffect(() => {
-//     const filteredChats = chats.filter((chat, index) => {
-//       const chatCategory = selectedCategory;
-//       return chatCategory
-//       // return chatCategory === selectedCategory;
-//     })
-//     setChats(filteredChats)
-//   }, [selectedCategory]);
-///???????????????????????????????????????????????????????????????
+  useEffect(() => {
+    // Здесь обновляем список чатов при изменении данных в Redux
+    setChats(categoryChats?.map((chat, index) => <Conversation key={index} />) || []);
+  }, [categoryChats]);
+
+  useEffect(() => {
+    if (selectedCategory !== null) {
+      dispatch(fetchCategories(selectedCategory)); // Здесь запрашиваются чаты для выбранной категории
+    }
+  }, [selectedCategory, dispatch]);
 
   return (
     <div className={`block-left-bar ${!visible ? 'hidden' : ''}`}>
@@ -56,7 +73,7 @@ function LeftBar({ visible }: visibleProps): JSX.Element {
               <li key={index}>
                 {chat}
                 <button type="button" onClick={() => toggleSetting(index)}>Setting</button>
-                {chatSettings[index].isOpen && <ConversationForm />}
+                {chatSettings[index] && chatSettings[index].isOpen && <ConversationForm />}
               </li>
             ))}
           </ul>
