@@ -2,15 +2,14 @@ import './App.css';
 import Navigation from './components/Navigation/Navigation';
 import Chat from './components/Chat/Chat';
 import { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from './hooks/redux';
-import { logout, restoreSession } from './features/auth/authSlice';
+import { useAppDispatch } from './hooks/redux';
+import { restoreSession } from './features/auth/authSlice';
 import { Route, Routes } from 'react-router-dom';
 import Home from './components/Home/Home';
 import Signin from './components/Signin/Signin';
 import Signup from './components/Signup/Signup';
 
 function App() {
-  const { isAuthenticated } = useAppSelector((store) => store.auth)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -26,12 +25,12 @@ function App() {
 
   return (
     <>
-      <Navigation />
+      {/* <Navigation /> */}
       <Routes>
         <Route path='/' element={<Navigation />}>
           <Route index element={<Home />} />
-          <Route path='/sign-in' element={<Signin />} />
-          <Route path='/sign-up' element={<Signup />} />
+          <Route path='/signin' element={<Signin />} />
+          <Route path='/signup' element={<Signup />} />
           <Route path='/chat' element={<Chat />} />
         </Route>
 

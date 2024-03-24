@@ -1,36 +1,59 @@
 .block-table {
-    margin: 5px 0;
-    overflow: hidden;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
-.block-table button{
+.table-inner {
+    width: 100%;
+    flex-grow: 1;
+    margin-top: 80px;
+    display: flex;
+    flex-direction: column-reverse;
+    overflow-y: auto;
+}
+
+.table-item:not(:last-child) {
+    margin-bottom: 10px;
+}
+
+.table-item{
+    width: 95%;
+}
+
+.span-scroll{
+    overflow-x: auto;
+}
+
+.table-item button{
     background: none;
     border: none;
     cursor: pointer;
     color: gray;
-
 }
 
-.block-table button:first-of-type {
+.table-item button:first-of-type {
     margin-right: 5px;
 }
-.block-search {
+
+.block-search{
+    width: 100%;
+}
+
+.search-inner {
     display: flex;
     align-items: center;
     border: 1px solid gray;
     border-radius: 8px;
-    margin-top: 15px;
+    margin: 20px 0;
     overflow: hidden;
 }
-
 
 .textarea-search {
     width: 100%;
     height: 22px;
     background: none;
-    display: flex;
-    align-items: center;
-    line-height: 100%;
     padding: 15px 50px 15px 10px;
     border: none;
     resize: none;
@@ -43,23 +66,22 @@
     outline: none;
 }
 
-.block-search .textarea-search::-webkit-scrollbar {
+.span-scroll::-webkit-scrollbar, .table-inner::-webkit-scrollbar, .textarea-search::-webkit-scrollbar {
     width: 6px;
+    height: 6px;
 }
-
-.block-search .textarea-search::-webkit-scrollbar-thumb {
+.span-scroll::-webkit-scrollbar-thumb, .table-inner::-webkit-scrollbar-thumb, .textarea-search::-webkit-scrollbar-thumb {
     background-color: #d8d8d8;
     border-radius: 5px;
 }
-
-.block-search textarea::-webkit-scrollbar-track {
+.span-scroll::-webkit-scrollbar-track, .table-inner::-webkit-scrollbar-track, .textarea-search::-webkit-scrollbar-track {
     background-color: inherit;
     border-radius: 5px;
 }
 
 .btn-search {
     position: absolute;
-    bottom: 8px;
+    bottom: 28px;
     right: 12px;
     z-index: 5;
     padding: 10px;

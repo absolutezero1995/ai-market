@@ -12,7 +12,7 @@ function Navigation() {
 
   const handleLogout = () => {
     dispatch(logout())
-    navigate('/sign-in')
+    navigate('/signin')
   }
 
   return (
@@ -38,10 +38,10 @@ function Navigation() {
       ) : (
       <>
       <li>
-        <Link to="/sign-in">sign-in</Link>
+        <Link to="/signin">sign-in</Link>
       </li>
       <li>
-        <Link to="/sign-up">sign-up</Link>
+        <Link to="/signup">sign-up</Link>
       </li>
       </>
       )

@@ -32,7 +32,6 @@ export const sendMessage = createAsyncThunk(
         method: 'POST',
         data: { message }
       });
-      console.log(message, data.content)
       return data.content;
     } catch (error) {
       throw rejectWithValue(error);
@@ -129,11 +128,10 @@ const chatSlice = createSlice({
       .addCase(deleteMessage.fulfilled, (state, action) => {
         state.status = 'success';
         state.view = state.view.filter((_, index) => index !== action.payload);
-        console.log('Deleted message index:', state.view);
       })
       .addCase(deleteMessage.rejected, (state, action) => {
         state.status = 'failed';
-        state.error = action.payload as string || 'An error occurred';
+        state.error = action.payload as string;
       });
   },
 });

@@ -1,16 +1,19 @@
-import "./RightBar.css"
+import "./RightBar.css";
 import { useCategoryContext } from "./CategoryContext";
 
 interface visibleProps {
     visibleR: boolean;
+    onCategoryClick: () => void;
 }
 
-function RightBar({ visibleR }: visibleProps) {
-    const {setSelectedCategory} = useCategoryContext()
+function RightBar({ visibleR, onCategoryClick }: visibleProps) {
+    const { setSelectedCategory } = useCategoryContext() || {};
 
-    const categories = [{category: "Conversation"}, {category: "Image"}, {category: "Video"}, {category: "Audio"}]
+    const categories = ["Conversation", "Image", "Video", "Audio"];
+
     const onHandleOpenCategoryChat = (category: string) => {
-        setSelectedCategory(category)
+        setSelectedCategory?.(category);
+        onCategoryClick();
     };
 
     return (
@@ -19,12 +22,12 @@ function RightBar({ visibleR }: visibleProps) {
                 <p>Category</p>
                 <ul className="content-navbar-right">
                     {categories.map((category, index) => (
-                        <li onClick={() => onHandleOpenCategoryChat(category.category)} key={index}>{category.category}</li>
+                        <li onClick={() => onHandleOpenCategoryChat(category)} key={index}>{category}</li>
                     ))}
                 </ul>
             </div>
         </div>
-    )
+    );
 }
 
-export default RightBar
+export default RightBar;

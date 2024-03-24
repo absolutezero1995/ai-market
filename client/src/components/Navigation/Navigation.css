@@ -1,6 +1,6 @@
 .block-menu{
     position: absolute;
-    right: 250px;
+    right: 20%;
     z-index: 5;
 }
 
@@ -17,6 +17,12 @@
     text-decoration: none;
     list-style: none;
     gap: 10px;
+}
+
+a{
+    text-decoration: none;
+    list-style: none;
+    padding: 5px;
 }
 
 .ul-list > li {
