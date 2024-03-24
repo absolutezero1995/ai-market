@@ -1,6 +1,7 @@
 const { validationResult } = require('express-validator');
 const userService = require('./user.service');
 const mailService = require('../mail/mail-service');
+
 const {
   USER_REGISTERED_SUCCESS,
   USER_LOGGED_IN_SUCCESS,
@@ -24,10 +25,12 @@ exports.register = asyncHandler(async (req, res) => {
   );
 
   // !!!OK
+  // *********************************************************************
   const mailTo = await mailService.sendActivationMail(
     email,
     `${process.env.API_URL}/api/users/activate/${user.activation_link}`
   );
+  // *********************************************************************
 
   const userInfo = {
     id: user.id,
