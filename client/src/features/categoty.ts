@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { makeRequest } from "../api/make-request";
-import { useCategoryContext } from "../components/Rightbar/CategoryContext";
 
 interface MessageResponse {
     // content: string,

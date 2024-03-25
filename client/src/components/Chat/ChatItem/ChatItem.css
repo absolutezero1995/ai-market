@@ -1,0 +1,10 @@
+.chat-item-container {
+    display: flex;
+}
+
+.chat-item-title {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    border: solid red 5px;
+}

@@ -1,6 +1,7 @@
 .block-table {
     margin: 5px 0;
     overflow: hidden;
+    border: #10992e solid 10px;
 }
 
 .block-table button{
@@ -37,6 +38,7 @@
     font-size: 16px;
     cursor: pointer;
     overflow: hidden;
+    color: #FFFFFF;
 }
 
 .textarea-search:focus {

@@ -1,36 +1,34 @@
-import { useEffect, useState } from "react";
 import "./Leftbar.css";
-import ConversationForm from "../Conversation/ConversationForm";
+import React, { useEffect, useState } from "react";
 import Conversation from "../Conversation/Conversation";
-import { useCategoryContext } from "../Rightbar/CategoryContext";
-import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { fetchCategories, setSelectedCategory } from "../../features/categoty";
-
-interface visibleProps {
-  visible: boolean;
-}
+import ChatItem from "../Chat/ChatItem/ChatItem";
+import { api } from '../../api/make-request';
 
 interface ChatSettings {
   index: number;
   isOpen: boolean;
 }
 
-function LeftBar({ visible }: visibleProps): JSX.Element {
 
-  // const  setSelectedCategory  = useCategoryContext()
-  // console.log(selectedCategory);
-  
 
-  const [originalChats, setOriginalChats] = useState<JSX.Element[]>([])
+const LeftBar: React.FC = ({chatHistory, setChatHistory}) => {
+  const [leftBarVisible, setLeftBarVisible] = useState(true); 
   const [chats, setChats] = useState<JSX.Element[]>([]);
-  const [chatSettings, setChatSettings] = useState<ChatSettings[]>([]);
-  const dispatch = useAppDispatch();
-  const chatsCategory = useAppSelector((state) => state.chat)
+  const [originalChats, setOriginalChats] = useState<JSX.Element[]>([]);
   
-  const selectedCategory = useAppSelector((state) => state.chats.selectedCategory);
-  const categoryChats = useAppSelector((state) => state.chats.chats[selectedCategory || ""]);
 
+  const getChats = async () => {
+    try {
+      const res = await api.get('/api/getchats');
+      setChats(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
+  useEffect(() => {
+    getChats();
+  }, [])
 
   const onHandleAddNewChat = () => {
     const newIndex = chats.length;
@@ -39,47 +37,36 @@ function LeftBar({ visible }: visibleProps): JSX.Element {
     setOriginalChats((prevChats) => [...prevChats, newChat]);
     setChats((prevChats) => [...prevChats, newChat]);
     setChatSettings((prevSettings) => [...prevSettings, newChatSettings]);
-    if (selectedCategory === null) {
-      dispatch(setSelectedCategory("defaultCategory"));
- // Замените "defaultCategory" на ваше значение по умолчанию
-    }
   };
 
-  const toggleSetting = (index: number) => {
-    setChatSettings(prevSettings =>
-      prevSettings.map((setting, i) =>
-        i === index ? { ...setting, isOpen: !setting.isOpen } : setting
-      )
-    );
+  const toggleLeftBar = () => {
+    setLeftBarVisible(!leftBarVisible);
   };
 
-  useEffect(() => {
-    // Здесь обновляем список чатов при изменении данных в Redux
-    setChats(categoryChats?.map((chat, index) => <Conversation key={index} />) || []);
-  }, [categoryChats]);
 
-  useEffect(() => {
-    if (selectedCategory !== null) {
-      dispatch(fetchCategories(selectedCategory)); // Здесь запрашиваются чаты для выбранной категории
-    }
-  }, [selectedCategory, dispatch]);
 
   return (
-    <div className={`block-left-bar ${!visible ? 'hidden' : ''}`}>
+    <div className='left-bar-container'>
+      {/* <div className="hide-icon">
+        <span className="icon-bar" onClick={toggleLeftBar}>
+          {leftBarVisible ? <FontAwesomeIcon icon={faChevronLeft} /> : <FontAwesomeIcon icon={faChevronRight} />}
+        </span>
+      </div> */}
+      <div className={`block-left-bar ${!leftBarVisible ? "hiddenL" : ""}`}>
         <div className="block-navbar">
-          <p>Your chat <button type="button" onClick={onHandleAddNewChat}>new chat</button></p>
+          <div className="create-btn">
+          <input type="button" onClick={onHandleAddNewChat} value={'CREATE NEW CHAT'}/>
+          </div>
           <ul>
-            {chats.map((chat, index) => (
-              <li key={index}>
-                {chat}
-                <button type="button" onClick={() => toggleSetting(index)}>Setting</button>
-                {chatSettings[index] && chatSettings[index].isOpen && <ConversationForm />}
-              </li>
-            ))}
+              {chats.map((chats) => (
+                <ChatItem chatHistory={chatHistory} setChatHistory={setChatHistory} chats={chats}  />
+              ))
+            }
           </ul>
+        </div>
       </div>
     </div>
   );
-}
+};
 
 export default LeftBar;

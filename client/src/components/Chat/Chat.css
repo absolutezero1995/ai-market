@@ -7,7 +7,10 @@
 .chat-search{
     display: flex;
     justify-content: space-between;
-    width: 100%;
+    width: 60%;
+    height: 87%;
+    border: solid 5px blue;
+    background-color: #1A1A1D;
 }
 
 .chat {

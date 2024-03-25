@@ -5,13 +5,15 @@ import { useNavigate } from 'react-router-dom'
 
 const Signup = () => {
   const [formData, setFormData] = useState({ email: '', password: '', name: '' })
+  const [error, setError] = useState('');
 
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    await dispatch(register(formData))
+    const res = await dispatch(register(formData));
+    console.log(res, 'res16')
     navigate('/')
   }
 
@@ -20,14 +22,14 @@ const Signup = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-4 mt-2.5">
+    <div className="form-container">
+    <form onSubmit={handleSubmit} className="signup_form">
       <input
         type="text"
         name="name"
         placeholder="Name"
         value={formData.name}
         onChange={handleChange}
-        className="border-2 border-gray-300 p-2 rounded-md"
       />
       <input
         type="email"
@@ -35,7 +37,6 @@ const Signup = () => {
         placeholder="Email"
         value={formData.email}
         onChange={handleChange}
-        className="border-2 border-gray-300 p-2 rounded-md"
       />
       <input
         type="password"
@@ -43,12 +44,13 @@ const Signup = () => {
         placeholder="Password"
         value={formData.password}
         onChange={handleChange}
-        className="border-2 border-gray-300 p-2 rounded-md"
       />
-      <button type="submit" className="border-2 border-gray-300 p-2 rounded-md bg-gray-300">
+      <button type="submit" className="sign_up_btn">
         Sign Up
       </button>
+      <h1 className="error-signup">{error}</h1>
     </form>
+    </div>
   )
 }
 

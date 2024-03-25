@@ -1,0 +1,16 @@
+.action-bar-container {
+    max-width: 1200px;
+    min-width: 500px;
+    display: flex;
+    justify-content: space-between; /* Равномерное распределение между детьми */
+    align-items: center; /* Выравнивание по центру по вертикали */
+  }
+  
+  .hide-icon-left-container {
+    order: 1; /* Левый бар будет всегда первым по порядку */
+  }
+  
+  .hide-icon-right-container {
+    order: 3; /* Правый бар будет всегда вторым по порядку */
+  }
+  

@@ -37,7 +37,7 @@ export const register = createAsyncThunk(
   'auth/register',
   async (userData: User, { rejectWithValue }) => {
     try {
-      const res = await makeRequest<AuthResponseType>('/api/signup', {
+      const res = await makeRequest<AuthResponseType>('/api/users/register', {
         method: 'POST',
         data: userData
       })
@@ -56,7 +56,7 @@ export const login = createAsyncThunk(
   'auth/login',
   async (credentials: Omit<User, 'name'>, { rejectWithValue }) => {
     try {
-      return await makeRequest<AuthResponseType>('/api/signin', {
+      return await makeRequest<AuthResponseType>('/api/users/login', {
         method: 'POST',
         data: credentials
       })
@@ -86,12 +86,13 @@ const authSlice = createSlice({
       localStorage.removeItem('userId')
     },
     restoreSession: (state, action) => {
-      const { accessToken, refreshToken, user } = action.payload
-      if (accessToken && refreshToken && user) {
+      const { accessToken, refreshToken, userId} = action.payload
+      console.log(action.payload, '@@@@@@@@@@@@@@');
+      if (accessToken && refreshToken && userId) {
         state.isAuthenticated = true
         state.accessToken = accessToken
         state.refreshToken = refreshToken
-        state.user = user // Восстанавливаем объект пользователя
+        state.user = userId // Восстанавливаем объект пользователя
       }
     }
   },
@@ -130,6 +131,7 @@ function resetState(state: AuthState) {
 
 function updateStateWithSuccessData(state: AuthState, payload: AuthResponseType) {
   state.status = 'succeeded'
+  console.log('11111111111111111'); 
   state.isAuthenticated = true
   state.error = null
   state.message = payload.message
@@ -141,6 +143,7 @@ function updateStateWithSuccessData(state: AuthState, payload: AuthResponseType)
   localStorage.setItem('accessToken', payload.accessToken)
   localStorage.setItem('refreshToken', payload.refreshToken)
   localStorage.setItem('userId', payload?.user?.id as string)
+  localStorage.setItem('isAuthenticated', 'true')
 }
 
 function updateStateWithFailureData(state: AuthState, payload: string) {

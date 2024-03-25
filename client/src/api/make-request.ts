@@ -1,5 +1,6 @@
 import axios, { AxiosRequestConfig } from 'axios'
 
+console.log('!!!!!!!!!!!')
 export const api = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL,
   withCredentials: true // Отправлять куки с каждым запросом
@@ -7,10 +8,13 @@ export const api = axios.create({
 
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('accessToken')
+    const token = localStorage.getItem('accessToken');
+    const userId = localStorage.getItem('userId')
+    console.log('INTERSEPTOR11')
     if (token) {
       config.headers['Authorization'] = 'Bearer ' + token
     }
+    console.log(config, 'CONFIG15')
     return config
   },
   (error) => {
@@ -27,7 +31,6 @@ api.interceptors.response.use(
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true
       try {
-        // Отправляем запрос на обновление токенов
         await api.post('api/users/refresh-token')
         // Повторяем оригинальный запрос с обновлённым accessToken
         return api(originalRequest)

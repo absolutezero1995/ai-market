@@ -1,9 +1,8 @@
 import { Link, Outlet, useNavigate } from 'react-router-dom';
-import './Navigation.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faToggleOff } from '@fortawesome/free-solid-svg-icons';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { logout } from '../../features/auth/authSlice';
+import './Navigation.css';
+
 
 function Navigation() {
   const { isAuthenticated } = useAppSelector((state) => state.auth)
@@ -12,45 +11,28 @@ function Navigation() {
 
   const handleLogout = () => {
     dispatch(logout())
-    navigate('/sign-in')
+    navigate('/')
   }
 
   return (
-    <>
-    <div className='block-menu'>
-    <nav className="nav-menu">
-      <ul className='ul-list'>
-      <li>
-        <div className='block-light'><FontAwesomeIcon icon={faToggleOff} /></div>
-      </li>
-      <li>
-        <Link to="/" >home</Link>
-      </li>
-      {isAuthenticated ? (
-      <>
-      <li>
-        <Link to="/chat">Chat</Link>
-      </li>
-      <li>
-        <button onClick={handleLogout}>Sign-out</button>
-      </li>
-      </>
-      ) : (
-      <>
-      <li>
-        <Link to="/sign-in">sign-in</Link>
-      </li>
-      <li>
-        <Link to="/sign-up">sign-up</Link>
-      </li>
-      </>
-      )
-      }
-      </ul>
-    </nav>
+    <div className="navigation-container">
+      {isAuthenticated && (
+        <nav className="navbar">
+          <ul>
+            <li>
+              <Link to="/">home</Link>
+            </li>
+            <li>
+              <Link to="/action">action</Link>
+            </li>
+            <li>
+              <button onClick={handleLogout}>exit</button>
+            </li>
+          </ul>
+        </nav >
+      )}
+      <Outlet />
     </div>
-    <Outlet />
-    </>
   )
 }
 

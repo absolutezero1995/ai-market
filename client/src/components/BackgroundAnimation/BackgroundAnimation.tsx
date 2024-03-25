@@ -1,7 +1,7 @@
-    import React, { useRef, useEffect } from 'react';
+    import { useRef, useEffect } from 'react';
     import * as THREE from 'three';
 
-    const BackgroundBig = () => {
+    const BackgroundAnimation = () => {
         const containerRef = useRef();
         let camera, scene, renderer, pyramid1, pyramid2;
 
@@ -13,7 +13,7 @@
                 const container = containerRef.current;
 
                 camera = new THREE.PerspectiveCamera(5, window.innerWidth / window.innerHeight, 0.1, 1000);
-                camera.position.z = 70;
+                camera.position.z = 80;
 
                 scene = new THREE.Scene();
 
@@ -69,11 +69,25 @@
 
             return () => {
                 document.removeEventListener('mousemove', onMouseMove);
-                containerRef.current.removeChild(renderer.domElement);
+                if(containerRef.current) {
+                    containerRef.current.removeChild(renderer.domElement);
+                }
             };
         }, []);
 
-        return <div ref={containerRef} style={{ position: 'fixed', top: 0, left: 0, zIndex: -1 }} />;
+        return (
+            <div
+                ref={containerRef}
+                style={{
+                    width: '100vh',
+                    height: '100vh',
+                    position: 'fixed',
+                    top: 0,
+                    left: 0,
+                    zIndex: -1
+                }}
+            />
+        );
     };
 
-    export default BackgroundBig;
+    export default BackgroundAnimation;

@@ -1,86 +1,43 @@
-// import "./RightBar.css"
-// // import { useCategoryContext } from "./CategoryContext";
-// import { fetchCategories } from "../../features/categoty";
-// import { useAppDispatch } from "../../hooks/redux";
-
-// interface visibleProps {
-//     visibleR: boolean;
-// }
-
-
-// function RightBar({ visibleR }: visibleProps) {
-//     // const {setSelectedCategory} = useCategoryContext()
-//     const dispatch = useAppDispatch()
-    
-//     const categories = [{category: "Conversation"}, {category: "Image"}, {category: "Video"}, {category: "Audio"}]
-//     const onHandleOpenCategoryChat = async(index: number) => {
-//         try {
-//             await dispatch(fetchCategories(index))
-//         } catch (error) {
-//             console.log(error);
-            
-//         }
-//     };
-
-//     return (
-//         <div className={`block-right-bar ${!visibleR ? 'hiddenR' : ''}`}>
-//             <div className="block-navbar">
-//                 <p>Category</p>
-//                 <ul className="content-navbar-right">
-//                     {categories.map((category, index) => (
-//                         <li onClick={() => onHandleOpenCategoryChat(index)} key={index}>{category.category}</li>
-//                     ))}
-//                 </ul>
-//             </div>
-//         </div>
-//     )
-// }
-
-// export default RightBar
-
-import { useState } from "react";
 import "./RightBar.css";
-import { useAppDispatch } from "../../hooks/redux";
-import { fetchCategories } from "../../features/categoty";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import React, { useState } from "react";
+import ProfileList from "../ProfileBar/ProfileList/ProfileList";
+import { Link } from "react-router-dom";
 
-interface Category {
-  category: string;
-}
 
-interface RightBarProps {
-  visibleR: boolean;
-}
 
-function RightBar({ visibleR }: RightBarProps) {
-  const categories: Category[] = [
-    { category: "Conversation" },
-    { category: "Image" },
-    { category: "Video" },
-    { category: "Audio" }
-  ];
-  const dispatch = useAppDispatch()
 
-  const onHandleOpenCategoryChat = async(index: number) => {
-    try {
-        await dispatch(fetchCategories(index))
-    } catch (error) {
-        console.log(error);
-        
-    }
-  };
+const RightBar: React.FC = () => {
+    const [rightBarVisible, setRightBarVisible] = useState(false);
 
-  return (
-    <div className={`block-right-bar ${!visibleR ? 'hiddenR' : ''}`}>
-      <div className="block-navbar">
-        <p>Category</p>
-        <ul className="content-navbar-right">
-          {categories.map((category, index) => (
-            <li onClick={() => onHandleOpenCategoryChat(index)} key={index}>{category.category}</li>
-          ))}
-        </ul>
-      </div>
-    </div>
-  );
-}
+    // const toggleRightBar = () => {
+    //     setRightBarVisible(!rightBarVisible);
+    // };
+    return (
+        <>
+        <div className="right-bar-container">
+        <div className="hide-icone">
+            {/* <span className="icon-bar" onClick={toggleRightBar}>
+                {rightBarVisible ? <FontAwesomeIcon icon={faChevronLeft} /> : <FontAwesomeIcon icon={faChevronRight} />}
+                </span> */}
+            </div>
+        <div className={`block-right-bar ${!rightBarVisible ? "hiddenR" : ""}`}>
+            <div className="block-navbar">
+            <div className="profile-icon-container">
+                <ProfileList />
+            </div>
+                <ul className="content-navbar-right">
+                <Link to="/">Conversation</Link>
+                <Link to="/">Image</Link>
+                <Link to="/">Video</Link>
+                <Link to="/">Audio</Link>
+                </ul>
+            </div>
+        </div>
+        </div>
+</>
+    );
+};
 
 export default RightBar;

@@ -1,42 +1,61 @@
+.right-bar-container {
+    display: flex;
+}
+
 .block-right-bar {
-    background: #cbc8db;
-    height: 100vh;
-    overflow: hidden;
-    animation-duration: 0.5s;
-    animation-name: slideInR;
-    transition: 0.5s;
-    width: 15%;
+    position: fixed;
+    top: 0;
+    right: -300px; /* Изначально сдвигаем вправо за пределы экрана */
+    width: 250px;
+    height: 100%;
+    background-color: #f0f0f0;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+    transition: right 0.3s ease; /* Используем transition для плавного изменения положения */
 }
 
 .hiddenR {
-    width: 0;
-    transition: 0.5s;
-    animation-duration: 0.5s;
-    animation-name: slideOutR;
+    right: 0; /* Сдвигаем обратно вправо на экран */
+}
+
+.block-navbar {
+    /* padding: 20px;
+    border-bottom: 1px solid #ccc; */
+}
+
+.block-navbar p {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.profile-icon-container {
+    display: flex;
+    justify-content: flex-start; /* Выравнивание по левому краю */
+    align-items: center; /* Центрирование элементов по вертикали */
+    margin-bottom: 100px; /* Добавление отступа снизу */
+}
+
+.content-navbar-right {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    gap: 30px;
+    padding: 40px;
+    margin: 0;
 }
 
 .content-navbar-right li {
+    padding: 10px 0;
     cursor: pointer;
+    margin-left: 10px; /* Добавляем расстояние между элементами */
 }
 
-.content-navbar-right li:hover{
-    background: #aeabbb85;
+.content-navbar-right a {
+    color: #333;
 }
 
-@keyframes slideInR {
-    from {
-        width: 0;
-    }
-    to {
-        width: 15%;
-    }
-}
-
-@keyframes slideOutR {
-    from {
-        width: 15%;
-    }
-    to {
-        width: 0;
-    }
+.content-navbar-right a:hover {
+    background-color: #333;
+    color: #ddd;
+    animation: none;
 }

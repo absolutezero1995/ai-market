@@ -1,0 +1,87 @@
+
+.menu-trigger img {
+    position: absolute;
+    top: 20px;
+    right: 100px;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+    background-color: #fff;
+}
+
+.active-logo-profile {
+    position: absolute;
+    bottom: 20px;
+    right: 300px;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+    background-color: #fff;
+}
+
+.dropdown-menu {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    background-color: #fff;
+    padding: 10px 10px;
+    width: 220px;
+    height: 450px;
+    border: solid 5px #663434;
+}
+
+.dropdown-menu::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    right: 20px;
+    height: 20px;
+    width: 20px;    
+    background: var(--secondary-bg);
+    transform: rotate(45deg);
+}
+
+.dropdown-menu.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    transition: all 2s ease; /* Пример значения */
+}
+
+.dropdown-menu.inactive {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-20px);
+    transition: all 0.3s ease; /* Пример значения */
+}
+
+
+.dropdown-menu-h3 {
+    color: #333;
+    display: flex;
+    justify-content: center;
+}
+
+.dropdown-menu .dropdown-list {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+}
+
+.dropdown-menu .dropdown-list li {
+    padding: 5px 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 20px;
+}
+
+.dropdown-menu .dropdown-list li a {
+    color: #333;
+    cursor: pointer;
+    border-radius: 20px;
+}
+
+

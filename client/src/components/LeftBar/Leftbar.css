@@ -1,16 +1,26 @@
 .block-left-bar {
-    width: 100%;
-    background: #cbc8db;
-    height: 100vh;
-    overflow: hidden;
-    animation-duration: 0.5s;
-    animation-name: slideIn;
+    position: fixed;
+    top: 0;
+    left: 0; /* Изменено справа на слева */
+    width: 250px; /* Изменено с 100% на фиксированную ширину */
+    height: 100%;
+    background-color: #f0f0f0; /* Изменен цвет фона */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Изменен с отрицательного сдвига на положительный */
+    transition: transform 0.3s ease;
 }
 
-.hidden {
-    width: 0;
-    animation-duration: 0.5s;
-    animation-name: slideOut;
+.hiddenL {
+    visibility: hidden; /* Изменен класс скрытия */
+}
+
+.hide-icon {
+    text-align: right; /* Изменено с left на right */
+    padding: 10px; /* Добавлен отступ */
+}
+
+.icon-bar {
+    cursor: pointer;
+    font-size: 24px;
 }
 
 .block-navbar > p {
@@ -43,18 +53,30 @@ p{
     padding: 0;
 }
 
+.create-btn {
+    margin-top: 50px;
+    width: 90%;
+    border: solid 10px blue;
+    border-radius: 10px;
+}
+
+.create-btn input {
+    width: 100%;
+    border-radius: 10px;
+}
+
 @keyframes slideIn {
     from {
         width: 0;
     }
     to {
-        width: 100%;
+        width: 300px; /* Изменено с 100% на фиксированную ширину */
     }
 }
 
 @keyframes slideOut {
     from {
-        width: 100%;
+        width: 300px; /* Изменено с 100% на фиксированную ширину */
     }
     to {
         width: 0;
