@@ -34,7 +34,7 @@ const initialState: ChatState = {
           data: { chat_id, request }
         });
         console.log(data, 'DATA')
-        return data.content;
+        return data;
       } catch (error) {
         throw rejectWithValue(error);
       }
