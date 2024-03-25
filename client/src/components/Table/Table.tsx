@@ -113,6 +113,7 @@ function Table({ id, chatHistory, setChatHistory }) {
 
     const handleDelete = async (index: number, id: number) => {
         try {
+            console.log('!!!!!!!!!!!!!!!!!!!');
             const deletedMessage = views[index] as Message;
             const stateViewIndex = stateView.findIndex((message) => {
                 if (typeof message === 'string' && typeof deletedMessage === 'string') {
@@ -124,14 +125,14 @@ function Table({ id, chatHistory, setChatHistory }) {
                 return false;
             });
             setViews(prevViews => prevViews.filter((_, i) => i !== index)); // Удаляем сообщение из views
-
+            dispatch(deleteMessage(id))
             // Удаляем сообщение из stateView и обновляем Redux state
-            if (stateViewIndex !== -1) {
-                const newStateView = [...stateView];
-                newStateView.splice(stateViewIndex, 1);
-                console.log(id, 'id132')
-                dispatch(deleteMessage(id)); // Диспетчеризуем deleteMessage.fulfilled с обновленным stateView
-            }
+            // if (stateViewIndex !== -1) {
+            //     const newStateView = [...stateView];
+            //     newStateView.splice(stateViewIndex, 1);
+            //     console.log(id, 'id132')
+            //     dispatch(deleteMessage(id));
+            // }
         } catch (e) {
             console.log(e);
         }

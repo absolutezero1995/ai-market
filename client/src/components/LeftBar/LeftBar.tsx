@@ -22,7 +22,6 @@ const LeftBar: React.FC = ({chatHistory, setChatHistory}) => {
       });
       const data = await res.json();
       setChats(data);
-      console.log(data);
     } catch (error) {
       console.log(error)
     }

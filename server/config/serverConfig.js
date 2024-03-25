@@ -3,6 +3,7 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const sessionConfig = require('./sessionConfig');
+const errorHandler = require('../middleware/errorHandler');
 
 const corsOption = {
   origin: 'http://localhost:5173',
@@ -17,6 +18,7 @@ const serverConfig = (app) => {
   app.use(express.json());
   app.use(express.static('public'));
   app.use(cors(corsOption));
+  app.use(errorHandler);
 };
 
 module.exports = serverConfig;

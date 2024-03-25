@@ -28,7 +28,7 @@ const initialState: ChatState = {
     'chat/sendMessage',
     async ({ chat_id, request }: { chat_id: number; request: string }, { rejectWithValue }) => {
       try {
-        console.log(chat_id, request, 'CHATID')
+        console.log(chat_id, request, 'CHATID31')
         const data: MessageResponse = await makeRequest<MessageResponse>("/api/conversation", {
           method: 'POST',
           data: { chat_id, request }
