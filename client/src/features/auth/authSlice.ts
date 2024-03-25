@@ -87,12 +87,13 @@ const authSlice = createSlice({
       localStorage.removeItem('userId')
     },
     restoreSession: (state, action) => {
-      const { accessToken, refreshToken, user } = action.payload
-      if (accessToken && refreshToken && user) {
+      const { accessToken, refreshToken, userId} = action.payload
+      console.log(action.payload, '@@@@@@@@@@@@@@');
+      if (accessToken && refreshToken && userId) {
         state.isAuthenticated = true
         state.accessToken = accessToken
         state.refreshToken = refreshToken
-        state.user = user // Восстанавливаем объект пользователя
+        state.user = userId // Восстанавливаем объект пользователя
       }
     }
   },
@@ -143,6 +144,7 @@ function updateStateWithSuccessData(state: AuthState, payload: AuthResponseType)
   localStorage.setItem('accessToken', payload.accessToken)
   localStorage.setItem('refreshToken', payload.refreshToken)
   localStorage.setItem('userId', payload?.user?.id as string)
+  localStorage.setItem('isAuthenticated', 'true')
 }
 
 function updateStateWithFailureData(state: AuthState, payload: string) {

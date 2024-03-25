@@ -18,6 +18,7 @@ exports.register = asyncHandler(async (req, res) => {
     }
 
     const { email, password, name } = req.body;
+    console.log(email, 'email21')
     const user = await userService.createUser({ email, password, name });
     // console.log('user.controller 20 ************************user: ', user); // !!!
     const { accessToken, refreshToken } = await userService.generateTokens(

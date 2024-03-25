@@ -1,8 +1,9 @@
 const router = require('express').Router();
-const { Chat } = require('../../db/models')
+const { Chat } = require('../../db/models');
+const verifyToken = require('../../middleware/verifyToken');
 
 
-router.get('/', async (req, res) => {
+router.get('/', verifyToken, async (req, res) => {
     try {
         console.log(req.user, 'req.token7');
         const authorizationHeader = req.headers.authorization;

@@ -14,9 +14,9 @@ function App() {
   const { isAuthenticated } = useAppSelector((store) => store.auth)
   const dispatch = useAppDispatch()
 
-  console.log(isAuthenticated, 'isAuth!!!')
 
   useEffect(() => {
+    console.log('I AM USEEFFECT!!!!!!');
     const accessToken = localStorage.getItem('accessToken')
     const refreshToken = localStorage.getItem('refreshToken')
     const userId = localStorage.getItem('userId')
@@ -24,6 +24,7 @@ function App() {
     if (accessToken && refreshToken && userId) {
       dispatch(restoreSession({ accessToken, refreshToken, userId }))
     }
+    console.log(isAuthenticated, 'isAuthenticated27')
   }, [dispatch])
 
 

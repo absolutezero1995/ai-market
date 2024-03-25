@@ -31,7 +31,6 @@ api.interceptors.response.use(
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true
       try {
-        // Отправляем запрос на обновление токенов
         await api.post('api/users/refresh-token')
         // Повторяем оригинальный запрос с обновлённым accessToken
         return api(originalRequest)

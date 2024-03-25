@@ -4,7 +4,7 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const sessionConfig = require('./sessionConfig');
 const errorHandler = require('../middleware/errorHandler');
-const verifyToken = require('../middleware/verifyToken');
+// const verifyToken = require('../middleware/verifyToken');
 
 const corsOption = {
   origin: 'http://localhost:5173',
@@ -19,7 +19,7 @@ const serverConfig = (app) => {
   app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
   app.use(express.static('public'));
-  app.use(verifyToken);
+  // app.use(verifyToken);
   app.use(errorHandler);
 };
 
