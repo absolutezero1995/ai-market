@@ -20,6 +20,10 @@ module.exports = (sequelize, DataTypes) => {
       },
       onDelete: "CASCADE"
     },
+    title: {
+      allowNull: false,
+      type: DataTypes.TEXT
+    },
   }, {
     sequelize,
     modelName: 'Chat',

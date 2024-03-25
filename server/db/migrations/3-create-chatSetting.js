@@ -18,10 +18,6 @@ module.exports = {
         },
         onDelete: "CASCADE"
       },
-      title: {
-        allowNull: false,
-        type: Sequelize.TEXT
-      },
       role: {
         allowNull: false,
         type: Sequelize.TEXT

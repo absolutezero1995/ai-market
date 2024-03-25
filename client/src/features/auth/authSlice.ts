@@ -131,7 +131,6 @@ function resetState(state: AuthState) {
 
 function updateStateWithSuccessData(state: AuthState, payload: AuthResponseType) {
   state.status = 'succeeded'
-  console.log('11111111111111111');
   state.isAuthenticated = true
   state.error = null
   state.message = payload.message

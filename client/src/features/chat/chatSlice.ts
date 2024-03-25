@@ -24,22 +24,22 @@ const initialState: ChatState = {
 };
 
 
-export const sendMessage = createAsyncThunk(
-  'chat/sendMessage',
-  async (message: string, { rejectWithValue }) => {
-    try {
-      const data: MessageResponse = await makeRequest<MessageResponse>("/api/conversation", {
-        method: 'POST',
-        data: { message }
-      });
-      console.log(message, data.content)
-      return data.content;
-    } catch (error) {
-      throw rejectWithValue(error);
+  export const sendMessage = createAsyncThunk(
+    'chat/sendMessage',
+    async ({ chat_id, request }: { chat_id: number; request: string }, { rejectWithValue }) => {
+      try {
+        console.log(chat_id, request, 'CHATID')
+        const data: MessageResponse = await makeRequest<MessageResponse>("/api/conversation", {
+          method: 'POST',
+          data: { chat_id, request }
+        });
+        console.log(data, 'DATA')
+        return data.content;
+      } catch (error) {
+        throw rejectWithValue(error);
+      }
     }
-  }
-);
-
+  );
 export const getHistoryChat = createAsyncThunk(
   'history/getHistoryChat',
   async (chat_id: ChatId, { rejectWithValue }) => {
@@ -67,16 +67,15 @@ export const saveMessage = createAsyncThunk(
     }
   }
 );
-
 export const deleteMessage = createAsyncThunk(
   'chat/deleteMessage',
-  async (index: number, { rejectWithValue}) => {
+  async (id: number, { rejectWithValue }) => {
     try {
-      await makeRequest<void>(`/api/deleteMessage/${index}`, {
-        method: 'DELETE',
-        data: { index }
+      console.log(id, 'id74');
+      const res = await makeRequest<void>(`/api/deleteMessage/${id}`, {
+        method: 'DELETE'
       });
-      return index;
+      console.log(res, "DATA80");
     } catch (error) {
       throw rejectWithValue(error);
     }

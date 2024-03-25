@@ -2,9 +2,11 @@ import { ChangeEvent, FormEvent, useState } from 'react'
 import { useAppDispatch } from '../../hooks/redux.ts'
 import { login } from '../../features/auth/authSlice.ts'
 import { useLocation, useNavigate } from 'react-router-dom'
+import './Signin.css';
 
 const Signin = () => {
     const [credentials, setCredentials] = useState({ email: '', password: '' })
+    const [error, setError] = useState('')
     const dispatch = useAppDispatch()
 
     const location = useLocation()
@@ -19,19 +21,23 @@ const Signin = () => {
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+        if (credentials.email === '' || credentials.password === '') {
+            return setError('enter your fields')
+        }
         await dispatch(login(credentials))
         navigate(from, { replace: true })
     }
 
     return (
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4 mt-2.5">
+        <div className="form-container">
+        <form onSubmit={handleSubmit} className="signup_form">
+        <h1 className="signup-form_h1">sign-in</h1>
             <input
                 type="email"
                 name="email"
                 placeholder="Email"
                 value={credentials.email}
                 onChange={handleChange}
-                className="border-2 border-gray-300 p-2 rounded-md"
             />
             <input
                 type="password"
@@ -39,12 +45,13 @@ const Signin = () => {
                 placeholder="Password"
                 value={credentials.password}
                 onChange={handleChange}
-                className="border-2 border-gray-300 p-2 rounded-md"
             />
-            <button type="submit" className="border-2 border-gray-300 p-2 rounded-md bg-gray-300">
-                Login
+            <button type="submit" className="sign_up_btn">
+                Sign in
             </button>
+            <h1 className="error-signup">{error}</h1>
         </form>
+        </div>
     )
 }
 

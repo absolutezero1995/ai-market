@@ -1,24 +1,36 @@
-import { useEffect, useState } from "react";
 import "./Leftbar.css";
-import ConversationForm from "../Conversation/ConversationForm";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import React, { useEffect, useState } from "react";
 import Conversation from "../Conversation/Conversation";
-import { useCategoryContext } from "../Rightbar/CategoryContext";
+import ChatItem from "../Chat/ChatItem/ChatItem";
 
-interface visibleProps {
-  visible: boolean;
-}
 
 interface ChatSettings {
   index: number;
   isOpen: boolean;
 }
 
-function LeftBar({ visible }: visibleProps): JSX.Element {
-
-  const { selectedCategory } = useCategoryContext()
-
+const LeftBar: React.FC = ({chatHistory, setChatHistory}) => {
+  const [leftBarVisible, setLeftBarVisible] = useState(true); 
   const [chats, setChats] = useState<JSX.Element[]>([]);
-  const [chatSettings, setChatSettings] = useState<ChatSettings[]>([]);
+
+  const getChats = async () => {
+    try {
+      const res = await fetch('http://localhost:3000/api/getchats', {
+
+      });
+      const data = await res.json();
+      setChats(data);
+      console.log(data);
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    getChats();
+  }, [])
 
   const onHandleAddNewChat = () => {
     const newIndex = chats.length;
@@ -28,41 +40,34 @@ function LeftBar({ visible }: visibleProps): JSX.Element {
     setChatSettings((prevSettings) => [...prevSettings, newChatSettings]);
   };
 
-  const toggleSetting = (index: number) => {
-    setChatSettings((prevSettings) =>
-      prevSettings.map((setting) =>
-        setting.index === index ? { ...setting, isOpen: !setting.isOpen } : setting
-      )
-    );
+  const toggleLeftBar = () => {
+    setLeftBarVisible(!leftBarVisible);
   };
 
-  ///???????????????????????????????????????????????????????????????
-//   useEffect(() => {
-//     const filteredChats = chats.filter((chat, index) => {
-//       const chatCategory = selectedCategory;
-//       return chatCategory
-//       // return chatCategory === selectedCategory;
-//     })
-//     setChats(filteredChats)
-//   }, [selectedCategory]);
-///???????????????????????????????????????????????????????????????
+
 
   return (
-    <div className={`block-left-bar ${!visible ? 'hidden' : ''}`}>
+    <div className='left-bar-container'>
+      {/* <div className="hide-icon">
+        <span className="icon-bar" onClick={toggleLeftBar}>
+          {leftBarVisible ? <FontAwesomeIcon icon={faChevronLeft} /> : <FontAwesomeIcon icon={faChevronRight} />}
+        </span>
+      </div> */}
+      <div className={`block-left-bar ${!leftBarVisible ? "hiddenL" : ""}`}>
         <div className="block-navbar">
-          <p>Your chat <button type="button" onClick={onHandleAddNewChat}>new chat</button></p>
+          <div className="create-btn">
+          <input type="button" onClick={onHandleAddNewChat} value={'CREATE NEW CHAT'}/>
+          </div>
           <ul>
-            {chats.map((chat, index) => (
-              <li key={index}>
-                {chat}
-                <button type="button" onClick={() => toggleSetting(index)}>Setting</button>
-                {chatSettings[index].isOpen && <ConversationForm />}
-              </li>
-            ))}
+              {chats.map((chats) => (
+                <ChatItem chatHistory={chatHistory} setChatHistory={setChatHistory} chats={chats}  />
+              ))
+            }
           </ul>
+        </div>
       </div>
     </div>
   );
-}
+};
 
 export default LeftBar;
