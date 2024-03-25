@@ -4,12 +4,15 @@ import { faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons
 import React, { useEffect, useState } from "react";
 import Conversation from "../Conversation/Conversation";
 import ChatItem from "../Chat/ChatItem/ChatItem";
-
+import axios from 'axios';
+import { api } from '../../api/make-request';
 
 interface ChatSettings {
   index: number;
   isOpen: boolean;
 }
+
+
 
 const LeftBar: React.FC = ({chatHistory, setChatHistory}) => {
   const [leftBarVisible, setLeftBarVisible] = useState(true); 
@@ -17,13 +20,10 @@ const LeftBar: React.FC = ({chatHistory, setChatHistory}) => {
 
   const getChats = async () => {
     try {
-      const res = await fetch('http://localhost:3000/api/getchats', {
-
-      });
-      const data = await res.json();
-      setChats(data);
+      const res = await api.get('/api/getchats');
+      setChats(res.data);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 
