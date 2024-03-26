@@ -50,11 +50,7 @@ function Table({ id, chatHistory, setChatHistory }) {
             console.log(error)
         }
     }
-
-    useEffect(() => {
-        console.log('I AM USEEFFECT');
-        getHistory()
-    }, [id])
+ 
 
     const handleOnChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         const currentTextarea = textareaRef.current;
