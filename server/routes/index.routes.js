@@ -1,5 +1,5 @@
 const express = require('express');
-const Conversation = require('./api/Conversation.routes'); // Указываем расширение .js для явного импорта файла
+const Conversation = require('./api/Conversation.routes.js'); // Указываем расширение .js для явного импорта файла
 
 const SignInRoute = require('./api/Signin.routes');
 const SignUpRoute = require('./api/Signup.routes');

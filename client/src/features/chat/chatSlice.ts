@@ -67,6 +67,7 @@ export const saveMessage = createAsyncThunk(
     }
   }
 );
+
 export const deleteMessage = createAsyncThunk(
   'chat/deleteMessage',
   async (id: number, { rejectWithValue }) => {
