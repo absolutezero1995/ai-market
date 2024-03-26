@@ -18,10 +18,6 @@ module.exports = (sequelize, DataTypes) => {
       },
       onDelete: "CASCADE"
     },
-    title: {
-      allowNull: false,
-      type: DataTypes.TEXT
-    },
     role: {
       allowNull: false,
       type: DataTypes.TEXT

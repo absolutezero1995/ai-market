@@ -2,9 +2,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane, faTrash, faCopy } from '@fortawesome/free-solid-svg-icons';
 import "./Table.css";
 
-import { deleteMessage, saveMessage, sendMessage } from '../../features/chat/chatSlice';
+import { deleteMessage, getChats, saveMessage, sendMessage } from '../../features/chat/chatSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { useEffect, useRef, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 interface Message {
     message: string;
@@ -24,11 +25,12 @@ interface RootState {
 
 function Table() {
     const dispatch = useAppDispatch();
+    const {id} = useParams();
+    console.log(typeof(id));
     const [textarea, setTextarea] = useState<string>('');
     const [views, setViews] = useState<Message[]>([]);
     const [isSending, setIsSending] = useState<boolean>(false);
     const textareaRef = useRef<HTMLTextAreaElement>(null);
-
     const stateView = useAppSelector((state: RootState) => state.chat.view)
 
     useEffect(() => {
@@ -58,12 +60,22 @@ function Table() {
         }
     }
 
+    useEffect(() => {
+        const axiosLibrary = async () => {
+            const libraryChats = await dispatch(getChats(id))
+            setViews(libraryChats.payload[0]);
+            console.log(views)
+            // console.log(libraryChats.payload[0].ChatHistories)
+        }
+        axiosLibrary()
+    }, [id]);
+
     const messageChatGPT = async () => {
         try {
             setIsSending(true);
             const res = await dispatch(sendMessage(textarea));
             const newMessage: Message = { message: textarea, content: res.payload as string };
-            setViews(prevViews => [newMessage, ...prevViews]);
+            setViews(prevViews => [...prevViews, res.payload as string]);
             dispatch(saveMessage(newMessage));
             setTextarea('');
             setIsSending(false);
@@ -96,23 +108,14 @@ function Table() {
         try {
             const deletedMessage = views[index];
             console.log(deletedMessage);
-            // Удаляем сообщение из stateView и обновляем Redux store
-            const newStateView: (string | Message)[] = [...stateView];
-            const stateViewIndex = newStateView.findIndex((message) => {
+            const stateViewIndex = stateView.findIndex((message) => {
                 if (typeof message !== 'string' && typeof deletedMessage !== 'string') {
                     return (message as Message).content === (deletedMessage as Message).content;
                 }
                 return false;
             });
-            if (stateViewIndex !== -1) {
-                newStateView.splice(stateViewIndex, 1);
+                setViews(prevViews => prevViews.filter((_, i) => i !== index));
                 await dispatch(deleteMessage(stateViewIndex)); // Диспетчеризуем deleteMessage с обновленным stateView
-            } else {
-                console.log("Индекс не найден в stateView:", stateViewIndex);
-            }
-    
-            // Удаляем сообщение из views
-            setViews(prevViews => prevViews.filter((_, i) => i !== index));
         } catch (e) {
             console.error("Ошибка при удалении:", e);
         }
@@ -122,7 +125,8 @@ function Table() {
     return (
         <div className='block-table'>
           <div className='table-inner'>
-            {views.map((el, i) => {
+            {views}
+            {/* {views.map((el) => {
             return (
                 <div key={i} className='table-item'>
                     <p>User:</p>
@@ -134,7 +138,7 @@ function Table() {
                     <button onClick={() => handleDelete(i)}><FontAwesomeIcon icon={faTrash} /></button>
                     </div>
                 </div>
-            )})}
+            )})} */}
             </div>
             <div className='block-search'>
                 <div className="search-inner">

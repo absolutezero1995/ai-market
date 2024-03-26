@@ -1,9 +1,9 @@
-    import React, { useRef, useEffect } from 'react';
+    import { useRef, useEffect } from 'react';
     import * as THREE from 'three';
 
     const BackgroundBig = () => {
         const containerRef = useRef();
-        let camera, scene, renderer, pyramid1, pyramid2;
+        let camera: THREE.PerspectiveCamera, scene: { add: (arg0: any) => void; position: THREE.Vector3; }, renderer: { setSize: (arg0: number, arg1: number) => void; domElement: any; render: (arg0: { add: (arg0: any) => void; position: THREE.Vector3; }, arg1: THREE.PerspectiveCamera) => void; }, pyramid1: { material: { color: { setRGB: (arg0: number, arg1: number, arg2: number) => void; }; }; rotation: { x: number; y: number; }; }, pyramid2: { material: { color: { setRGB: (arg0: number, arg1: number, arg2: number) => void; }; }; rotation: { x: number; y: number; }; };
 
         useEffect(() => {
             let mouseX = 0,
@@ -36,7 +36,7 @@
                 animate();
             };
 
-            const onMouseMove = (event) => {
+            const onMouseMove = (event: { clientX: number; clientY: number; }) => {
                 mouseX = (event.clientX / window.innerWidth) * 2 - 1;
                 mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
             };
