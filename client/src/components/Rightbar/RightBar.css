@@ -3,14 +3,13 @@
 }
 
 .block-right-bar {
-    position: fixed;
-    top: 0;
-    right: -300px; /* Изначально сдвигаем вправо за пределы экрана */
+    background: #cbc8db;
+    height: 100vh;
+    overflow: hidden;
+    animation-duration: 0.5s;
+    animation-name: slideInR;
+    transition: 0.5s;
     width: 250px;
-    height: 100%;
-    background-color: #f0f0f0;
-    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
-    transition: right 0.3s ease; /* Используем transition для плавного изменения положения */
 }
 
 .hiddenR {
@@ -54,8 +53,20 @@
     color: #333;
 }
 
-.content-navbar-right a:hover {
-    background-color: #333;
-    color: #ddd;
-    animation: none;
+@keyframes slideInR {
+    from {
+        width: 0;
+    }
+    to {
+        width: 250px;
+    }
+}
+
+@keyframes slideOutR {
+    from {
+        width: 250px;
+    }
+    to {
+        width: 0;
+    }
 }

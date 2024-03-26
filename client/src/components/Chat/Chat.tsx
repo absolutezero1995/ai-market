@@ -5,13 +5,37 @@ import { useParams } from 'react-router-dom';
 import "./Chat.css"
 import { useState } from "react";
 
+
 function Chat(): JSX.Element {
-    const [chatHistory, setChatHistory] = useState([])
-    let { id } = useParams();
+    const [leftBarVisible, setLeftBarVisible] = useState(true);
+    const [rightBarVisible, setRightBarVisible] = useState(true);
+    const [leftBlockVisible, setLeftBlockVisible] = useState(false);
+
+    const toggleLeftBar = () => {
+        setLeftBarVisible(!leftBarVisible);
+    };
+
+    const toggleRightBar = () => {
+        setRightBarVisible(!rightBarVisible);
+    };
+
+    const handleCategoryClick = () => {
+        setLeftBlockVisible(true);
+    };
 
     return (
         <div className="block-chat">
-            <LeftBar chatHistory={chatHistory} setChatHistory={setChatHistory} />
+            {leftBlockVisible && (
+                // <div className="block-left">
+                <>
+                <LeftBar visible={leftBarVisible} />
+                <span className="icon-bar" onClick={toggleLeftBar}>
+                    {leftBarVisible ? <FontAwesomeIcon icon={faChevronLeft} /> : <FontAwesomeIcon icon={faChevronRight} />}
+                </span>
+                </>
+                // </div>
+            )}
+
             <div className="chat-search">
                 <div className="chat">
                     <div className="chat-position">
@@ -19,9 +43,13 @@ function Chat(): JSX.Element {
                     </div>
                 </div>
             </div>
-            <RightBar />
+
+            <span className="icon-bar" onClick={toggleRightBar}>
+                {rightBarVisible ? <FontAwesomeIcon icon={faChevronRight} /> : <FontAwesomeIcon icon={faChevronLeft} />}
+            </span>
+            <RightBar visibleR={rightBarVisible} onCategoryClick={handleCategoryClick} />
         </div>
-    )
+    );
 }
 
 export default Chat;

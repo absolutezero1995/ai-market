@@ -2,9 +2,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane, faTrash, faCopy } from '@fortawesome/free-solid-svg-icons';
 import "./Table.css";
 
-import { deleteMessage, saveMessage, sendMessage } from '../../features/chat/chatSlice';
+import { deleteMessage, getChats, saveMessage, sendMessage } from '../../features/chat/chatSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { useEffect, useRef, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 interface Message {
     message: string;
@@ -24,6 +25,8 @@ interface RootState {
 
 function Table({ id, chatHistory, setChatHistory }) {
     const dispatch = useAppDispatch();
+    const {id} = useParams();
+    console.log(typeof(id));
     const [textarea, setTextarea] = useState<string>('');
     const [views, setViews] = useState<Message[]>([]);
     const [isSending, setIsSending] = useState<boolean>(false);
@@ -36,22 +39,6 @@ function Table({ id, chatHistory, setChatHistory }) {
         }
     }, [views]);
 
-    const getHistory = async () => {
-        try {
-            const res = await fetch(`http://localhost:3000/api/gethistorychat/${id}`);
-            const data = await res.json()
-            console.log(data[0].chat_id, 'DATA43');
-            if (data !== undefined) {
-                setViews(data);
-            }
-            console.log(chatHistory, 'CHATHISTORY')
-
-        } catch (error) {
-            console.log(error)
-        }
-    }
- 
-
     const handleOnChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         const currentTextarea = textareaRef.current;
         if (currentTextarea) {
@@ -63,28 +50,38 @@ function Table({ id, chatHistory, setChatHistory }) {
             } else {
                 currentTextarea.style.height = `${singleLineHeight}px`;
             }
-
-            if (scrollHeight > 200) {
+            if (scrollHeight > 150) {
                 currentTextarea.style.overflowY = 'scroll';
-                currentTextarea.style.height = '200px';
+                currentTextarea.style.height = '150px';
             } else {
                 currentTextarea.style.overflowY = 'hidden';
             }
-
             setTextarea(e.target.value); // .replace(/^\s+/g, '')
         }
     }
 
+    useEffect(() => {
+        const axiosLibrary = async () => {
+            const libraryChats = await dispatch(getChats(id))
+            setViews(libraryChats.payload[0]);
+            console.log(views)
+            // console.log(libraryChats.payload[0].ChatHistories)
+        }
+        axiosLibrary()
+    }, [id]);
+
     const messageChatGPT = async () => {
         try {
             setIsSending(true);
-            const chat_id = id;
-            const res = await dispatch(sendMessage({ chat_id, request: textarea }));
-            const newMessage: Message = { chat_id, request: textarea, responce: res.payload as string };
-            setViews(prevViews => [...prevViews, newMessage]);
+            const res = await dispatch(sendMessage(textarea));
+            const newMessage: Message = { message: textarea, content: res.payload as string };
+            setViews(prevViews => [...prevViews, res.payload as string]);
             dispatch(saveMessage(newMessage));
             setTextarea('');
             setIsSending(false);
+            if (textareaRef.current) {
+                textareaRef.current.style.height = '22px';
+            }
         } catch (e) {
             console.error("Ошибка отправки сообщения:", e);
             setIsSending(false);
@@ -107,73 +104,47 @@ function Table({ id, chatHistory, setChatHistory }) {
         navigator.clipboard.writeText(content)
     }
 
-    const handleDelete = async (index: number, id: number) => {
+    const handleDelete = async (index: number) => {
         try {
-            console.log('!!!!!!!!!!!!!!!!!!!');
-            const deletedMessage = views[index] as Message;
+            const deletedMessage = views[index];
+            console.log(deletedMessage);
             const stateViewIndex = stateView.findIndex((message) => {
-                if (typeof message === 'string' && typeof deletedMessage === 'string') {
-                    return message === deletedMessage;
-                }
                 if (typeof message !== 'string' && typeof deletedMessage !== 'string') {
-                    return (message as Message).content === deletedMessage.content;
+                    return (message as Message).content === (deletedMessage as Message).content;
                 }
                 return false;
             });
-            setViews(prevViews => prevViews.filter((_, i) => i !== index)); // Удаляем сообщение из views
-            dispatch(deleteMessage(id))
-            // Удаляем сообщение из stateView и обновляем Redux state
-            // if (stateViewIndex !== -1) {
-            //     const newStateView = [...stateView];
-            //     newStateView.splice(stateViewIndex, 1);
-            //     console.log(id, 'id132')
-            //     dispatch(deleteMessage(id));
-            // }
+                setViews(prevViews => prevViews.filter((_, i) => i !== index));
+                await dispatch(deleteMessage(stateViewIndex)); // Диспетчеризуем deleteMessage с обновленным stateView
         } catch (e) {
-            console.log(e);
+            console.error("Ошибка при удалении:", e);
         }
     }
+    
 
     return (
-        <div>
-            {/* <div>
-                {chatHistory.length !== 0 ? (
-                    chatHistory.map(chatHistoryItem => (
-                        <div key={chatHistoryItem.id}> 
-                            {chatHistoryItem.request}
-                            {chatHistoryItem.responce}
-                        </div>
-                    ))
-                ) : (
+        <div className='block-table'>
+          <div className='table-inner'>
+            {views}
+            {/* {views.map((el) => {
+            return (
+                <div key={i} className='table-item'>
+                    <p>User:</p>
+                    <div className='span-scroll'><span>{el.message}</span></div>
+                    <p>ChatGPT:</p>
+                    <p className='span-scroll'>{el.content}</p>
                     <div>
-                        No history
+                    <button onClick={() => handleCopy(el.content)}><FontAwesomeIcon icon={faCopy} /></button>
+                    <button onClick={() => handleDelete(i)}><FontAwesomeIcon icon={faTrash} /></button>
                     </div>
-                )}      
-            </div> */}
-            <div>
-                {views.map((el, i) => {
-                    return (
-                        <div key={i} className='block-table'>
-                            <p>chat{el.chat_id}: {el.request}</p>
-                            <p>ChatGPT: {el.responce}</p>
-                            <button onClick={() => handleCopy(el.content)}><FontAwesomeIcon icon={faCopy} /></button>
-                            <button onClick={() => handleDelete(i, el.id)}><FontAwesomeIcon icon={faTrash} /></button>
-                        </div>
-                    )
-                })}
+                </div>
+            )})} */}
             </div>
-            <div className="block-search">
-                <textarea
-                    className="textarea-search"
-                    placeholder="Введите ваш запрос..."
-                    value={textarea}
-                    onChange={handleOnChange}
-                    ref={textareaRef}
-                    disabled={isSending}
-                    onKeyPress={handleKeyPress}
-                    autoFocus
-                />
-                <button className="btn-search" type='button' onClick={handleSend} disabled={textarea.length === 0}><FontAwesomeIcon icon={faPaperPlane} /></button>
+            <div className='block-search'>
+                <div className="search-inner">
+                    <textarea  className="textarea-search" placeholder="Введите ваш запрос..." value={textarea} onChange={handleOnChange} ref={textareaRef} disabled={isSending} onKeyPress={handleKeyPress} autoFocus/>
+                    <button className="btn-search" type='button' onClick={handleSend} disabled={textarea.length === 0}><FontAwesomeIcon icon={faPaperPlane} /></button>
+                </div>
             </div>
         </div>
     );

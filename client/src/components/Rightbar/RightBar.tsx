@@ -1,19 +1,36 @@
 import "./RightBar.css";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
-import React, { useState } from "react";
+import { useCategoryContext } from "./CategoryContext";
 import ProfileList from "../ProfileBar/ProfileList/ProfileList";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useAppDispatch } from "../../hooks/redux";
+import { getCategory } from "../../features/chat/chatSlice";
+
+interface visibleProps {
+    visibleR: boolean;
+    onCategoryClick: () => void;
+}
+
+function RightBar({ visibleR, onCategoryClick }: visibleProps) {
+    const dispatch = useAppDispatch();
+    const [categories, setCategories] = useState([]);
+    const { setSelectedCategory } = useCategoryContext() || {};
 
 
+    const onHandleOpenCategoryChat = (categoryId) => {
+        setSelectedCategory?.(categoryId);
+        onCategoryClick();
+    };
 
+    useEffect( () => {
+        const axiosCategories = async () => {
+        const res = await dispatch(getCategory());
+        if(res){
+            setCategories(res.payload)
+        }
+        }
+        axiosCategories();
+    }, [])
 
-const RightBar: React.FC = () => {
-    const [rightBarVisible, setRightBarVisible] = useState(false);
-
-    // const toggleRightBar = () => {
-    //     setRightBarVisible(!rightBarVisible);
-    // };
     return (
         <>
         <div className="right-bar-container">
@@ -28,16 +45,17 @@ const RightBar: React.FC = () => {
                 <ProfileList />
             </div>
                 <ul className="content-navbar-right">
-                <Link to="/">Conversation</Link>
-                <Link to="/">Image</Link>
-                <Link to="/">Video</Link>
-                <Link to="/">Audio</Link>
+                    {categories.map((category) => {
+                        console.log(category.id , " - id")
+                        return(<li onClick={() => onHandleOpenCategoryChat(category.id)} key={category.id}>{category.category}</li>)
+                    })}
                 </ul>
+                <div className="profile-icon-container">
+                <ProfileList />
+            </div>
             </div>
         </div>
-        </div>
-</>
     );
-};
+}
 
 export default RightBar;

@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from 'react'
 import { useAppDispatch } from '../../hooks/redux.ts'
 import { login } from '../../features/auth/authSlice.ts'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate, Link } from 'react-router-dom'
 import './Signin.css';
 
 const Signin = () => {
@@ -50,6 +50,7 @@ const Signin = () => {
                 Sign in
             </button>
             <h1 className="error-signup">{error}</h1>
+            <Link to='/signup'>Registration</Link>
         </form>
         </div>
     )

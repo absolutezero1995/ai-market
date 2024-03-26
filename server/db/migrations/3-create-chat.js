@@ -18,6 +18,15 @@ module.exports = {
         },
         onDelete: "CASCADE"
       },
+      category_id: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: "Categories",
+          key: "id"
+        },
+        onDelete: "CASCADE"
+      },
       title: {
         allowNull: false,
         type: Sequelize.TEXT

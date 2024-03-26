@@ -1,69 +1,81 @@
 import "./Leftbar.css";
-import React, { useEffect, useState } from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSquarePlus } from '@fortawesome/free-regular-svg-icons';
+import ConversationForm from "../Conversation/ConversationForm";
 import Conversation from "../Conversation/Conversation";
+import { useCategoryContext } from "../Rightbar/CategoryContext";
 import ChatItem from "../Chat/ChatItem/ChatItem";
-import { api } from '../../api/make-request';
+import { useAppDispatch } from "../../hooks/redux";
+import { getChats } from "../../features/chat/chatSlice";
+
+interface visibleProps {
+  visible: boolean;
+}
 
 interface ChatSettings {
   index: number;
   isOpen: boolean;
 }
 
-
-
-const LeftBar: React.FC = ({chatHistory, setChatHistory}) => {
-  const [leftBarVisible, setLeftBarVisible] = useState(true); 
-  const [chats, setChats] = useState<JSX.Element[]>([]);
-  const [originalChats, setOriginalChats] = useState<JSX.Element[]>([]);
+function LeftBar({ visible, chatHistory, setChatHistory }: visibleProps): JSX.Element {
+  const { selectedCategory } = useCategoryContext() || {};
+  const dispatch = useAppDispatch();
+  const [chats, setChats] = useState([]);
+  const [chatSettings, setChatSettings] = useState<{ [key: string]: ChatSettings[] }>({});
   
 
-  const getChats = async () => {
-    try {
-      const res = await api.get('/api/getchats');
-      setChats(res.data);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
+  
   useEffect(() => {
-    getChats();
-  }, [])
+    const axiosChats = async () => {
+    if (selectedCategory && !chats[selectedCategory]) {
+      const res = await dispatch(getChats(selectedCategory));
+      if(res){
+        setChats(res.payload)
+      }
+    }
+      setChatSettings(prevSettings => ({...prevSettings,[selectedCategory]: []}));
+    }
+    axiosChats()
+  }, [selectedCategory]);
 
   const onHandleAddNewChat = () => {
-    const newIndex = chats.length;
-    const newChat = <Conversation key={newIndex} />;
-    const newChatSettings = { index: newIndex, isOpen: false };
-    setOriginalChats((prevChats) => [...prevChats, newChat]);
-    setChats((prevChats) => [...prevChats, newChat]);
-    setChatSettings((prevSettings) => [...prevSettings, newChatSettings]);
+    if (selectedCategory) {
+      const category_id = selectedCategory;
+      console.log(category_id)
+      // const newChat = <Conversation key={category_id} />;
+      // const newChatSettings = { category_id: category_id, isOpen: false };
+      // setChats(prevChats => ({...prevChats, [selectedCategory]: [...(prevChats[selectedCategory] || []), newChat]}));
+      // setChatSettings(prevSettings => ({...prevSettings, [selectedCategory]: [...(prevSettings[selectedCategory] || []), newChatSettings]}));
+    }
   };
 
-  const toggleLeftBar = () => {
-    setLeftBarVisible(!leftBarVisible);
+  const toggleSetting = (index: number) => {
+    if (selectedCategory) {
+      setChatSettings(prevSettings => ({...prevSettings, [selectedCategory]: prevSettings[selectedCategory]?.map((setting) => setting.index === index ? { ...setting, isOpen: !setting.isOpen } : setting ) || []}));
+    }
   };
-
-
 
   return (
-    <div className='left-bar-container'>
-      {/* <div className="hide-icon">
-        <span className="icon-bar" onClick={toggleLeftBar}>
-          {leftBarVisible ? <FontAwesomeIcon icon={faChevronLeft} /> : <FontAwesomeIcon icon={faChevronRight} />}
-        </span>
-      </div> */}
-      <div className={`block-left-bar ${!leftBarVisible ? "hiddenL" : ""}`}>
-        <div className="block-navbar">
-          <div className="create-btn">
-          <input type="button" onClick={onHandleAddNewChat} value={'CREATE NEW CHAT'}/>
-          </div>
-          <ul>
-              {chats.map((chats) => (
-                <ChatItem chatHistory={chatHistory} setChatHistory={setChatHistory} chats={chats}  />
-              ))
-            }
-          </ul>
-        </div>
+    <div className={`block-left-bar ${!visible ? 'hidden' : ''}`}>
+      <div className="block-navbar">
+        <p>Your chat</p>
+        <div className="block-btn-add"><button type="button" onClick={onHandleAddNewChat}>New chat <span><FontAwesomeIcon icon={faSquarePlus} /></span></button></div>
+        <ul>
+          {/* {chats[selectedCategory || '']?.map((chats, index) => (
+            <li key={index}>
+              <ChatItem chatHistory={chatHistory} setChatHistory={setChatHistory} chats={chats}  />
+              <button type="button" onClick={() => toggleSetting(index)}>Setting</button>
+              {chatSettings[selectedCategory || '']?.[index]?.isOpen && <ConversationForm />}
+            </li>
+          ))} */}
+          {chats.map((chat) => (
+            <li key={chat.id}>
+              <ChatItem chatHistory={chatHistory} setChatHistory={setChatHistory} chats={chat}  />
+              <button type="button" onClick={() => toggleSetting(chat.id)}>Setting</button>
+              {chatSettings[selectedCategory || '']?.[chat.id]?.isOpen && <ConversationForm />}
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );

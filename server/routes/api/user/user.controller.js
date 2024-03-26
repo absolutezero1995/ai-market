@@ -124,7 +124,8 @@ exports.refreshToken = asyncHandler(async (req, res) => {
             refreshToken: newRefreshToken,
         });
     } catch (error) {
-        res.status(401).json({ message: 'Invalid refresh token' });
+        res.status(401);
+        return console.log('Invalid refresh token');
     }
 });
 
@@ -134,9 +135,7 @@ exports.activate = async (req, res) => {
         await userService.activate(activationLink);
         // console.log('user.controller*********activate');
         // return res.redirect(process.env.CLIENT_URL);
-        res.status(200).json({
-            message: 'The activation was successful. Please sign in',
-        });
+        res.status(200).redirect(`http://localhost:5173/signin`);
     } catch (e) {
         return console.log(e);
     }

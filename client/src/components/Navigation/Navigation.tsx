@@ -15,6 +15,7 @@ function Navigation() {
   }
 
   return (
+    <>
     <div className="navigation-container">
       {isAuthenticated && (
         <nav className="navbar">
@@ -23,7 +24,7 @@ function Navigation() {
               <Link to="/">home</Link>
             </li>
             <li>
-              <Link to="/action">action</Link>
+              <Link to="/chat">chat</Link>
             </li>
             <li>
               <button onClick={handleLogout}>exit</button>
@@ -31,7 +32,6 @@ function Navigation() {
           </ul>
         </nav >
       )}
-      <Outlet />
     </div>
   )
 }

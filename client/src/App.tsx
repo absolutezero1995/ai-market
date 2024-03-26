@@ -8,7 +8,8 @@ import { Route, Routes } from 'react-router-dom';
 import Home from './components/Home/Home';
 import Signin from './components/Signin/Signin';
 import Signup from './components/Signup/Signup';
-import ActionBars from './components/ActionBars/ActionBars';
+import Table from './components/Table/Table';
+// import ActionBars from './components/ActionBars/ActionBars';
 
 function App() {
   const { isAuthenticated } = useAppSelector((store) => store.auth)
@@ -35,8 +36,8 @@ function App() {
           <Route index element={<Home />} />
           <Route path='/signin' element={<Signin />} />
           <Route path='/signup' element={<Signup />} />
-          <Route path='/action' element={<ActionBars />} />
-          <Route path='/chat/:id' element={<Chat />} />
+          <Route path='/chat' element={<Chat />} />
+          <Route path='/chat/:id' element={<Table />} />
         </Route>
       </Routes>
     </div>

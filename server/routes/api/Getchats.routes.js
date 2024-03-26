@@ -1,22 +1,22 @@
 const router = require('express').Router();
 const { Chat } = require('../../db/models');
 const verifyToken = require('../../middleware/verifyToken');
+const { ChatHistory } = require('../../db/models')
 
 
-router.get('/', verifyToken, async (req, res) => {
+router.post('/', verifyToken, async (req, res) => {
     try {
-        console.log(req.user, 'req.token7');
-        const authorizationHeader = req.headers.authorization;
-        console.log(authorizationHeader, 'authorizationHeader9');
-        let token;
-        if (authorizationHeader) {
-            token = authorizationHeader.split(' ')[1];
-        }
-        console.log(token, 'token17')
-        const chatsList = await Chat.findAll({where: {user_id: req.user.userId}})
-        res.json(chatsList)
+        const {category_id} = req.body;
+        console.log(req.body);
+        const chatsList = await Chat.findAll({
+            where: { user_id: req.user.userId, category_id: Number(category_id) },
+            include: [{ model: ChatHistory }],
+        });
+        console.log(chatsList)
+        res.send(chatsList);
     } catch (error) {
-        console.log(error)
+        console.error('Error fetching chats:', error);
+        res.status(500).send('Internal Server Error');
     }
 });
 

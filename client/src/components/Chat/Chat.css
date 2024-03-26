@@ -7,10 +7,8 @@
 .chat-search{
     display: flex;
     justify-content: space-between;
-    width: 60%;
-    height: 87%;
-    border: solid 5px blue;
-    background-color: #1A1A1D;
+    width: 100%;
+    margin: 0 40px;
 }
 
 .chat {
@@ -23,15 +21,15 @@
 
 .chat-position {
     position: absolute;
-    bottom: 50px;
-    width: 80%;
+    bottom: 0;
+    width: 100%;
 }
 
-.block-left {
-    width: 15%;
+/* .block-left {
+    width: 20%;
     display: flex;
     align-items: center;
-}
+} */
 
 
 .icon-bar{

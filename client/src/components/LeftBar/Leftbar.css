@@ -1,12 +1,12 @@
 .block-left-bar {
-    position: fixed;
-    top: 0;
-    left: 0; /* Изменено справа на слева */
-    width: 250px; /* Изменено с 100% на фиксированную ширину */
-    height: 100%;
-    background-color: #f0f0f0; /* Изменен цвет фона */
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Изменен с отрицательного сдвига на положительный */
-    transition: transform 0.3s ease;
+    /* width: 100%; */
+    width: 250px;
+    background: #cbc8db;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    animation-duration: 0.5s;
+    animation-name: slideIn;
 }
 
 .hiddenL {
@@ -23,6 +23,25 @@
     font-size: 24px;
 }
 
+.block-navbar{
+    overflow-y: auto;
+    overflow-x: hidden;
+    text-align: center;
+}
+
+.block-navbar::-webkit-scrollbar {
+    width: 6px;
+}
+.block-navbar::-webkit-scrollbar-thumb {
+    background-color: #d8d8d8;
+    border-radius: 5px;
+}
+.block-navbar::-webkit-scrollbar-track {
+    background-color: inherit;
+    border-radius: 5px;
+}
+
+
 .block-navbar > p {
     font-size: 24px;
     text-align: center;
@@ -30,8 +49,27 @@
     font-weight: 600;
 }
 
-.block-navbar button{
+.block-btn-add{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.block-btn-add button{
+    display: flex;
+    width: 80%;
+    justify-content: space-between;
+    align-items: center;
     cursor: pointer;
+    background: none;
+    border: 1px solid gray;
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 18px;
+}
+
+.block-btn-add span{
+    font-size: 20px;
 }
 
 .block-navbar ul {
@@ -70,13 +108,15 @@ p{
         width: 0;
     }
     to {
-        width: 300px; /* Изменено с 100% на фиксированную ширину */
+        /* width: 100%; */
+        width: 250px;
     }
 }
 
 @keyframes slideOut {
     from {
-        width: 300px; /* Изменено с 100% на фиксированную ширину */
+        /* width: 100%; */
+        width: 250px;
     }
     to {
         width: 0;

@@ -14,7 +14,7 @@ router.post('/', async (req, res) => {
 
   try {
     const chatHistories = await ChatHistory.findAll({ where: { chat_id } });
-    console.log(chatHistories)
+    // console.log(chatHistories)
     let concatenatedHistory = '';
     if (chatHistories !== undefined &&  chatHistories.length > 0) {
       concatenatedHistory = chatHistories.reduce((acc, item) => acc + String(`${item.request}? \n твой ответ: ${item.responce}.`), '');
@@ -32,7 +32,7 @@ router.post('/', async (req, res) => {
     const newChatHistory = { chat_id, request, responce: chatCompletion.choices[0].message.content };
     const historyItem = await ChatHistory.create(newChatHistory);
 
-    console.log(historyItem.responce, '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
+    // console.log(historyItem.responce, '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
     res.json(historyItem.responce);
   } catch (error) { 
     console.log('[conversation.route]', error);
