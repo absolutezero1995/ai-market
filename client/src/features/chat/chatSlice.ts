@@ -36,6 +36,7 @@ export const sendMessage = createAsyncThunk(
         data: { id, request }
       });
       console.log(data);
+      console.log(data, 'I AM DATA 39')
       return data;
     } catch (error) {
       throw rejectWithValue(error);
