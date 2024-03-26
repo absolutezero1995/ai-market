@@ -1,6 +1,6 @@
 const express = require('express');
 const OpenAI = require('openai');
-const { ChatHistory } = require('../../db/models');
+const { ChatHistory, ChatSetting } = require('../../db/models');
 
 const router = express.Router();
 
@@ -11,29 +11,39 @@ const openai = new OpenAI({
 
 router.post('/', async (req, res) => {
   const { id, request } = req.body;
-  console.log(id, request, "-------------------------------------------")
   try {
     const chatHistories = await ChatHistory.findAll({ where: { chat_id: id } });
-    // console.log(chatHistories)
-    let concatenatedHistory = '';
-    if (chatHistories !== undefined &&  chatHistories.length > 0) {
-      concatenatedHistory = chatHistories.reduce((acc, item) => acc + String(`${item.request}? \n твой ответ: ${item.responce}.`), '');
-    } else {
-      concatenatedHistory = request;
+    const chatSettings = await ChatSetting.findOne({ where: { chat_id: id } });
+    let messages = [];
+
+    if (chatHistories && chatHistories.length > 0) {
+      messages = chatHistories.map((history) => ({
+        role: 'system',
+        content: history.responce,
+      }));
+    }
+    console.log(chatSettings, 'chatSettings 25')
+    messages.push({ role: 'user', content: request });
+
+    let model = 'gpt-3.5-turbo';
+    let temperature = 0.8;
+
+    if (chatSettings) {
+      model = chatSettings.version;
+      temperature = chatSettings.temperature;
     }
 
-    // console.log(concatenatedHistory, '!!!!!!!!!!!!!!');
     const chatCompletion = await openai.chat.completions.create({
-      model: 'gpt-3.5-turbo',
-      messages: [{ role: 'assistant', content: concatenatedHistory }],
+      model,
+      messages,
+      temperature,  
     });
 
-    // console.log(request , chatCompletion.choices[0].message.content, '@@@@@@@@@@@@@@@@@@@@@')
-    const newChatHistory = { chat_id: id, request, responce: chatCompletion.choices[0].message.content };
-    const historyItem = await ChatHistory.create(newChatHistory);
-
-    // console.log(historyItem.responce, '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');
-    res.json(historyItem.responce);
+    const responce = chatCompletion.choices[0].message.content;
+    const newChatHistory = { chat_id: id, request, responce };
+    await ChatHistory.create(newChatHistory);
+    
+    res.json(responce);
   } catch (error) { 
     console.log('[conversation.route]', error);
     res.status(500).send('Internal Server Error');

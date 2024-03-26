@@ -1,20 +1,39 @@
 'use strict';
 
 module.exports = {
-    async up(queryInterface, Sequelize) {
-        const now = new Date();
-        await queryInterface.bulkInsert(
-            "ChatSettings",
-            [
-                { chat_id: 1, role: 'You are the best history teacher, you are expert in second world war', version: 'gpt-3.5-turbo', temperature: 0.7, createdAt: now, updatedAt: now },
-                { chat_id: 2, role: 'You are a language expert, focusing on English literature', version: 'gpt-3.5-turbo', temperature: 0.7, createdAt: now, updatedAt: now },
-                { chat_id: 3, role: 'You are a science guru, particularly knowledgeable in physics', version: 'gpt-3.5-turbo', temperature: 0.7, createdAt: now, updatedAt: now },
-            ],
-            {},
-        );
+    up: async (queryInterface, Sequelize) => {
+        const chatSettings = [
+            {
+                chat_id: 1,
+                version: 'gpt-3.5-turbo',
+                roleS: 'system',
+                roleU: 'user',
+                roleA: 'assistant',
+                c   ,
+                temperature: 0.8,
+                n: 3,
+                createdAt: new Date(),
+                updatedAt: new Date()
+            },
+            {
+                chat_id: 2,
+                version: 'gpt-3.5-turbo',
+                roleS: 'system',
+                roleU: 'user',
+                roleA: 'assistant',
+                content: 'You are a knowledgeable assistant.',
+                temperature: 0.7,
+                n: 2,
+                createdAt: new Date(),
+                updatedAt: new Date()
+            },
+            // добавьте остальные боты здесь
+        ];
+
+        return queryInterface.bulkInsert('ChatSettings', chatSettings, {});
     },
 
-    async down(queryInterface, Sequelize) {
-        await queryInterface.bulkDelete("ChatSettings", null, {});
-    },
+    down: (queryInterface, Sequelize) => {
+        return queryInterface.bulkDelete('ChatSettings', null, {});
+    }
 };
