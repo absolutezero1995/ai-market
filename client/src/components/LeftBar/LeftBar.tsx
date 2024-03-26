@@ -42,7 +42,6 @@ function LeftBar({ visible, chatHistory, setChatHistory }: visibleProps): JSX.El
   const onHandleAddNewChat = () => {
     if (selectedCategory) {
       const category_id = selectedCategory;
-      console.log(category_id)
       // const newChat = <Conversation key={category_id} />;
       // const newChatSettings = { category_id: category_id, isOpen: false };
       // setChats(prevChats => ({...prevChats, [selectedCategory]: [...(prevChats[selectedCategory] || []), newChat]}));

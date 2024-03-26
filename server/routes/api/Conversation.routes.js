@@ -10,10 +10,10 @@ const openai = new OpenAI({
 });
 
 router.post('/', async (req, res) => {
-  const { chat_id, request } = req.body;
-
+  const { id, request } = req.body;
+  console.log(id, request, "-------------------------------------------")
   try {
-    const chatHistories = await ChatHistory.findAll({ where: { chat_id } });
+    const chatHistories = await ChatHistory.findAll({ where: { chat_id: id } });
     // console.log(chatHistories)
     let concatenatedHistory = '';
     if (chatHistories !== undefined &&  chatHistories.length > 0) {
@@ -29,7 +29,7 @@ router.post('/', async (req, res) => {
     });
 
     // console.log(request , chatCompletion.choices[0].message.content, '@@@@@@@@@@@@@@@@@@@@@')
-    const newChatHistory = { chat_id, request, responce: chatCompletion.choices[0].message.content };
+    const newChatHistory = { chat_id: id, request, responce: chatCompletion.choices[0].message.content };
     const historyItem = await ChatHistory.create(newChatHistory);
 
     // console.log(historyItem.responce, '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%');

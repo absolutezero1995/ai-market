@@ -29,13 +29,14 @@ const initialState: ChatState = {
 
 export const sendMessage = createAsyncThunk(
   'chat/sendMessage',
-  async (message: string, { rejectWithValue }) => {
+  async ({id, request}: { id: number; request: string }, { rejectWithValue }) => {
     try {
       const data: MessageResponse = await makeRequest<MessageResponse>("/api/conversation", {
         method: 'POST',
-        data: { message }
+        data: { id, request }
       });
-      return data.content;
+      console.log(data);
+      return data;
     } catch (error) {
       throw rejectWithValue(error);
     }
