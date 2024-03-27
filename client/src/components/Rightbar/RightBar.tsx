@@ -35,15 +35,14 @@ function RightBar({ visibleR, onCategoryClick }: visibleProps) {
         <div className={`block-right-bar ${!visibleR ? 'hiddenR' : ''}`}>
             <div className="block-navbar">
                 <p>Category</p>
-                <ul className="content-navbar-right">
-                    {categories.map((category) => {
-                        console.log(category.id , " - id")
-                        return(<li onClick={() => onHandleOpenCategoryChat(category.id)} key={category.id}>{category.category}</li>)
-                    })}
-                </ul>
                 <div className="profile-icon-container">
-                <ProfileList />
-            </div>
+                    <ProfileList />
+                </div>
+                <ul className="content-navbar-right">
+                    {categories.map((category) => (
+                    <li onClick={() => onHandleOpenCategoryChat(category.id)} key={category.id}>{category.category}</li>)
+                    )}
+                </ul>
             </div>
         </div>
     );

@@ -1,0 +1,90 @@
+.block-addChat{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.block-addChat form{
+  width: 80%;
+}
+
+.block-addChat p{
+  font-size: 20px;
+  font-weight: 600;
+  color: aliceblue;
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
+
+.block-addChat input[type="text"]{
+  font-size: 18px;
+  padding: 5px;
+  border-radius: 6px;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.block-addChat input[type="text"]:focus{
+  background: #dddddd;
+}
+
+/* Стилизация элемента select */
+.block-addChat select {
+  cursor: pointer;
+  padding: 5px;
+  width: 100%;
+  outline: none;
+  border-radius: 4px;
+  font-size: 18px;
+  font-weight: 400;
+  position: relative;
+  appearance: none;
+  -webkit-appearance: none;
+  border: 1px solid #ccc;
+}
+
+/* Псевдоэлемент для стрелки */
+.block-addChat select::after {
+  content: '\f078';
+  background: #000;
+  color: #000;
+  font-family: 'FontAwesome';
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  color: #666;
+}
+
+/* Поворот стрелки при открытии select */
+.block-addChat select:focus::after {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+input[type="range"] {
+  appearance: none;
+  -webkit-appearance: none;
+  margin-right: 15px;
+  width: 100%;
+  height: 7px;
+  background: linear-gradient(var(--range-background), var(--range-background));
+  border-radius: 5px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background:#949393;
+  cursor: pointer;
+}
+
+input[type=range]::-webkit-slider-runnable-track  {
+  appearance: none;
+  -webkit-appearance: none;
+  box-shadow: none;
+  border: none;
+  background: transparent;
+}

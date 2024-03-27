@@ -36,8 +36,9 @@ function App() {
           <Route index element={<Home />} />
           <Route path='/signin' element={<Signin />} />
           <Route path='/signup' element={<Signup />} />
-          <Route path='/chat' element={<Chat />} />
-          <Route path='/chat/:id' element={<Table />} />
+          <Route path='/chat' element={<Chat />}>
+            <Route path='/chat/:id' element={<Table />} />
+          </Route>
         </Route>
       </Routes>
     </div>

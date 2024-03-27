@@ -3,11 +3,11 @@ import "./Leftbar.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquarePlus } from '@fortawesome/free-regular-svg-icons';
 import ConversationForm from "../Conversation/ConversationForm";
-import Conversation from "../Conversation/Conversation";
 import { useCategoryContext } from "../Rightbar/CategoryContext";
 import ChatItem from "../Chat/ChatItem/ChatItem";
 import { useAppDispatch } from "../../hooks/redux";
 import { getChats } from "../../features/chat/chatSlice";
+import Modal from "../ModalForm/ModalForm";
 
 interface visibleProps {
   visible: boolean;
@@ -18,18 +18,48 @@ interface ChatSettings {
   isOpen: boolean;
 }
 
-function LeftBar({ visible, chatHistory, setChatHistory }: visibleProps): JSX.Element {
+function LeftBar({ visible }: visibleProps): JSX.Element {
   const { selectedCategory } = useCategoryContext() || {};
   const dispatch = useAppDispatch();
   const [chats, setChats] = useState([]);
   const [chatSettings, setChatSettings] = useState<{ [key: string]: ChatSettings[] }>({});
   
 
-  
+  const positiveButtonMessage = 'OK'
+  const negativeButtonMessage = 'Cancel'
+
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  //хэндлеры для открытия/закрытия модалки
+  const handleOpenModal = () => {
+    setIsModalOpen(true)
+  }
+  const handleCloseModal = () => {
+    setIsModalOpen(false)
+  }
+
+  const handleSave = async (_data: { [key: string]: string }) => {
+    const addChat = document.forms.namedItem('addChat-form') as HTMLFormElement
+    const formData = new FormData(addChat)
+    const CreatedAnimal = {
+      name: formData.get('name') as string,
+      description: formData.get('description') as string,
+      photo: {
+        title: formData.getAll('title') as [],
+        url: formData.getAll('url') as [],
+      },
+    }
+
+    await addAnimals(CreatedAnimal.name, CreatedAnimal.description, CreatedAnimal.photo as {})
+    const animalsData = await animalsPage()
+    setAnimalsPageData(animalsData)
+  }
+
+
   useEffect(() => {
     const axiosChats = async () => {
-    if (selectedCategory && !chats[selectedCategory]) {
+    if (selectedCategory) {
       const res = await dispatch(getChats(selectedCategory));
+      console.log(selectedCategory, '- selectedCategory 33');
       if(res){
         setChats(res.payload)
       }
@@ -39,44 +69,48 @@ function LeftBar({ visible, chatHistory, setChatHistory }: visibleProps): JSX.El
     axiosChats()
   }, [selectedCategory]);
 
-  const onHandleAddNewChat = () => {
-    if (selectedCategory) {
-      const category_id = selectedCategory;
-      // const newChat = <Conversation key={category_id} />;
-      // const newChatSettings = { category_id: category_id, isOpen: false };
-      // setChats(prevChats => ({...prevChats, [selectedCategory]: [...(prevChats[selectedCategory] || []), newChat]}));
-      // setChatSettings(prevSettings => ({...prevSettings, [selectedCategory]: [...(prevSettings[selectedCategory] || []), newChatSettings]}));
-    }
-  };
+  // const onHandleAddNewChat = () => {
+  //   if (selectedCategory) {
+  //     console.log(selectedCategory)
+  //     const newIndex = chats[selectedCategory]?.length || 0;
+  //     const newChatSettings = { index: newIndex, isOpen: false };
+  //     setChatSettings(prevSettings => ({...prevSettings, [selectedCategory]: [...(prevSettings[selectedCategory] || []), newChatSettings]}));
+  //   }
+  // };
 
-  const toggleSetting = (index: number) => {
-    if (selectedCategory) {
-      setChatSettings(prevSettings => ({...prevSettings, [selectedCategory]: prevSettings[selectedCategory]?.map((setting) => setting.index === index ? { ...setting, isOpen: !setting.isOpen } : setting ) || []}));
-    }
-  };
+  // const toggleSetting = (index: number) => {
+  //   if (selectedCategory) {
+  //     setChatSettings(prevSettings => ({...prevSettings, [selectedCategory]: prevSettings[selectedCategory]?.map((setting) => setting.index === index ? { ...setting, isOpen: !setting.isOpen } : setting ) || []}));
+  //   }
+  // };
 
   return (
     <div className={`block-left-bar ${!visible ? 'hidden' : ''}`}>
       <div className="block-navbar">
         <p>Your chat</p>
-        <div className="block-btn-add"><button type="button" onClick={onHandleAddNewChat}>New chat <span><FontAwesomeIcon icon={faSquarePlus} /></span></button></div>
+        <div className="block-btn-add"><button type="button" onClick={handleOpenModal}>New chat <span><FontAwesomeIcon icon={faSquarePlus} /></span></button></div>
         <ul>
-          {/* {chats[selectedCategory || '']?.map((chats, index) => (
+          {chats.map((chat, index) => (
             <li key={index}>
-              <ChatItem chatHistory={chatHistory} setChatHistory={setChatHistory} chats={chats}  />
-              <button type="button" onClick={() => toggleSetting(index)}>Setting</button>
-              {chatSettings[selectedCategory || '']?.[index]?.isOpen && <ConversationForm />}
-            </li>
-          ))} */}
-          {chats.map((chat) => (
-            <li key={chat.id}>
-              <ChatItem chatHistory={chatHistory} setChatHistory={setChatHistory} chats={chat}  />
-              <button type="button" onClick={() => toggleSetting(chat.id)}>Setting</button>
-              {chatSettings[selectedCategory || '']?.[chat.id]?.isOpen && <ConversationForm />}
+              <ChatItem chats={chat}  />
+              {/* <button type="button" onClick={() => toggleSetting(index)}>Setting</button> */}
             </li>
           ))}
         </ul>
       </div>
+      {isModalOpen && (
+        <div className='modal-background'>
+          <Modal
+            title='New chat'
+            positiveButtonMessage={positiveButtonMessage}
+            negativeButtonMessage={negativeButtonMessage}
+            onSave={handleSave}
+            onClose={handleCloseModal}
+            showButtons={true}>
+            <ConversationForm />
+          </Modal>
+        </div>
+      )}
     </div>
   );
 }

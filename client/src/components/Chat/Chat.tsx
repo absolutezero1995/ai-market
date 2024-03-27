@@ -26,16 +26,14 @@ function Chat(): JSX.Element {
 
     return (
         <div className="block-chat">
-            {leftBlockVisible && (
-                // <div className="block-left">
+            {/* {leftBlockVisible && ( */}
                 <>
                 <LeftBar visible={leftBarVisible} />
                 <span className="icon-bar" onClick={toggleLeftBar}>
                     {leftBarVisible ? <FontAwesomeIcon icon={faChevronLeft} /> : <FontAwesomeIcon icon={faChevronRight} />}
                 </span>
                 </>
-                // </div>
-            )}
+            {/* )} */}
 
             <div className="chat-search">
                 <div className="chat">
