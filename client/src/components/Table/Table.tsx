@@ -1,50 +1,4 @@
 
-
-// const handleKeyPress = async (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-//     if (textarea.length !== 0 && e.key === 'Enter' && !e.shiftKey) {
-//         await messageChatGPT();
-//     }
-// }
-
-// const handleSend = async () => {
-//     if (textarea.length !== 0) {
-//         await messageChatGPT();
-//     }
-// }
-
-// const handleCopy = (content: string) => {
-//     navigator.clipboard.writeText(content)
-// }
-
-// const handleDelete = async (index: number, id: number) => {
-//     try {
-//         console.log('!!!!!!!!!!!!!!!!!!!');
-//         const deletedMessage = views[index] as Message;
-//         const stateViewIndex = stateView.findIndex((message) => {
-//             if (typeof message === 'string' && typeof deletedMessage === 'string') {
-//                 return message === deletedMessage;
-//             }
-//             if (typeof message !== 'string' && typeof deletedMessage !== 'string') {
-//                 return (message as Message).content === deletedMessage.content;
-//             }
-//             return false;
-//         });
-//         setViews(prevViews => prevViews.filter((_, i) => i !== index)); // Удаляем сообщение из views
-//         dispatch(deleteMessage(id))
-//         // Удаляем сообщение из stateView и обновляем Redux state
-//         // if (stateViewIndex !== -1) {
-//         //     const newStateView = [...stateView];
-//         //     newStateView.splice(stateViewIndex, 1);
-//         //     console.log(id, 'id132')
-//         //     dispatch(deleteMessage(id));
-//         // }
-//     } catch (e) {
-//         console.log(e);
-//     }
-// }
-
-
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane, faTrash, faCopy } from '@fortawesome/free-solid-svg-icons';
 import "./Table.css";
@@ -73,7 +27,7 @@ interface RootState {
 
 function Table() {
     const dispatch = useAppDispatch();
-    const {id} = useParams();
+    const { id } = useParams();
     const [textarea, setTextarea] = useState<string>('');
     const [views, setViews] = useState<Message[]>([]);
     const [isSending, setIsSending] = useState<boolean>(false);
@@ -107,9 +61,9 @@ function Table() {
         }
     }
 
-    
+
     const axiosLibrary = async () => {
-        if(id){
+        if (id) {
             const libraryChats = await dispatch(getChats(id));
             if (libraryChats.payload && libraryChats.payload.length > 0) {
                 setViews(libraryChats.payload[0].ChatHistories);
@@ -122,25 +76,6 @@ function Table() {
     useEffect(() => {
         axiosLibrary()
     }, [id]);
-
-    // const messageChatGPT = async () => {
-    //     try {
-    //         setIsSending(true);
-    //         const res = await dispatch(sendMessage({ id, request: textarea }));
-
-    //         const newMessage: Message = { id, request: textarea, responce: res.payload as string };            
-    //         setViews(prevViews => [...prevViews.ChatHistories, newMessage]);
-    //         await dispatch(saveMessage(newMessage));
-    //         setTextarea('');
-    //         setIsSending(false);
-    //         if (textareaRef.current) {
-    //             textareaRef.current.style.height = '22px';
-    //         }
-    //     } catch (e) {
-    //         console.error("Ошибка отправки сообщения:", e);
-    //         setIsSending(false);
-    //     }
-    // }
 
     const messageChatGPT = async () => {
         try {
@@ -189,50 +124,35 @@ function Table() {
                 }
                 return false;
             });
-                setViews(prevViews => prevViews.filter((_, i) => i !== index));
-                await dispatch(deleteMessage(stateViewIndex)); // Диспетчеризуем deleteMessage с обновленным stateView
+            setViews(prevViews => prevViews.filter((_, i) => i !== index));
+            await dispatch(deleteMessage(stateViewIndex));
         } catch (e) {
             console.error("Ошибка при удалении:", e);
         }
     }
-    
+
 
     return (
         <div className='block-table'>
-          <div className='table-inner'>
-            
-            {views && (
-                views.map((chat, index) => (
-                    <div key={index}>
-                        <p>User:</p>
-                        <div className='span-scroll'><span>{chat.request}</span></div>
-                        <p>ChatGPT:</p>
-                        <p className='span-scroll'>{chat.responce}</p>
-                        <div>
-                            <button onClick={() => handleCopy(chat.responce)}><FontAwesomeIcon icon={faCopy} /></button>
-                            <button onClick={() => handleDelete(index)}><FontAwesomeIcon icon={faTrash} /></button>
+            <div className='table-inner'>
+                {views && (
+                    views.map((chat, index) => (
+                        <div key={index}>
+                            <p>User:</p>
+                            <div className='span-scroll'><span>{chat.request}</span></div>
+                            <p>ChatGPT:</p>
+                            <p className='span-scroll'>{chat.responce}</p>
+                            <div>
+                                <button onClick={() => handleCopy(chat.responce)}><FontAwesomeIcon icon={faCopy} /></button>
+                                <button onClick={() => handleDelete(index)}><FontAwesomeIcon icon={faTrash} /></button>
+                            </div>
                         </div>
-                    </div>
-                ))
-            )}
-
-            {/* {views.map((el) => {
-            return (
-                <div key={i} className='table-item'>
-                    <p>User:</p>
-                    <div className='span-scroll'><span>{el.message}</span></div>
-                    <p>ChatGPT:</p>
-                    <p className='span-scroll'>{el.content}</p>
-                    <div>
-                    <button onClick={() => handleCopy(el.content)}><FontAwesomeIcon icon={faCopy} /></button>
-                    <button onClick={() => handleDelete(i)}><FontAwesomeIcon icon={faTrash} /></button>
-                    </div>
-                </div>
-            )})} */}
+                    ))
+                )}
             </div>
             <div className='block-search'>
                 <div className="search-inner">
-                    <textarea  className="textarea-search" placeholder="Введите ваш запрос..." value={textarea} onChange={handleOnChange} ref={textareaRef} disabled={isSending} onKeyPress={handleKeyPress} autoFocus/>
+                    <textarea className="textarea-search" placeholder="Введите ваш запрос..." value={textarea} onChange={handleOnChange} ref={textareaRef} disabled={isSending} onKeyPress={handleKeyPress} autoFocus />
                     <button className="btn-search" type='button' onClick={handleSend} disabled={textarea.length === 0}><FontAwesomeIcon icon={faPaperPlane} /></button>
                 </div>
             </div>

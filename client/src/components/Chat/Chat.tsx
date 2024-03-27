@@ -10,7 +10,7 @@ import { useState } from "react";
 function Chat(): JSX.Element {
     const [leftBarVisible, setLeftBarVisible] = useState(true);
     const [rightBarVisible, setRightBarVisible] = useState(true);
-    const [leftBlockVisible, setLeftBlockVisible] = useState(false);
+    const [leftBlockVisible, setLeftBlockVisible] = useState(true);
 
     const toggleLeftBar = () => {
         setLeftBarVisible(!leftBarVisible);

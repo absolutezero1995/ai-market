@@ -3,7 +3,6 @@ import "./Leftbar.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquarePlus } from '@fortawesome/free-regular-svg-icons';
 import ConversationForm from "../Conversation/ConversationForm";
-import Conversation from "../Conversation/Conversation";
 import { useCategoryContext } from "../Rightbar/CategoryContext";
 import ChatItem from "../Chat/ChatItem/ChatItem";
 import { useAppDispatch } from "../../hooks/redux";
@@ -42,10 +41,6 @@ function LeftBar({ visible, chatHistory, setChatHistory }: visibleProps): JSX.El
   const onHandleAddNewChat = () => {
     if (selectedCategory) {
       const category_id = selectedCategory;
-      // const newChat = <Conversation key={category_id} />;
-      // const newChatSettings = { category_id: category_id, isOpen: false };
-      // setChats(prevChats => ({...prevChats, [selectedCategory]: [...(prevChats[selectedCategory] || []), newChat]}));
-      // setChatSettings(prevSettings => ({...prevSettings, [selectedCategory]: [...(prevSettings[selectedCategory] || []), newChatSettings]}));
     }
   };
 
@@ -61,13 +56,6 @@ function LeftBar({ visible, chatHistory, setChatHistory }: visibleProps): JSX.El
         <p>Your chat</p>
         <div className="block-btn-add"><button type="button" onClick={onHandleAddNewChat}>New chat <span><FontAwesomeIcon icon={faSquarePlus} /></span></button></div>
         <ul>
-          {/* {chats[selectedCategory || '']?.map((chats, index) => (
-            <li key={index}>
-              <ChatItem chatHistory={chatHistory} setChatHistory={setChatHistory} chats={chats}  />
-              <button type="button" onClick={() => toggleSetting(index)}>Setting</button>
-              {chatSettings[selectedCategory || '']?.[index]?.isOpen && <ConversationForm />}
-            </li>
-          ))} */}
           {chats.map((chat) => (
             <li key={chat.id}>
               <ChatItem chatHistory={chatHistory} setChatHistory={setChatHistory} chats={chat}  />
