@@ -52,11 +52,7 @@ function Table() {
     const axiosLibrary = async () => {
         if(id){
             const libraryChats = await dispatch(getChats(id));
-            if (libraryChats.payload && libraryChats.payload.length > 0) {
                 setViews(libraryChats.payload[0].ChatHistories);
-            } else {
-                setViews([]);  // Установите пустой массив, если данные не найдены
-            }
         }
     }
 
@@ -68,13 +64,13 @@ function Table() {
         try {
             setIsSending(true);
             console.log(id)
+            console.log(textarea)
             const res = await dispatch(sendMessage({ id, request: textarea }));
             const newMessage: Message  = {
                 request: textarea,
                 responce: res.payload as string
             };
             setViews(prevViews => [newMessage, ...prevViews]);
-            dispatch(saveMessage(newMessage));
             setTextarea('');
             setIsSending(false);
             if (textareaRef.current) {
@@ -111,7 +107,7 @@ function Table() {
         }
     }
     
-
+    console.log(views, " - views 110");
     return (
         <div className='block-table'>
           <div className='table-inner'>

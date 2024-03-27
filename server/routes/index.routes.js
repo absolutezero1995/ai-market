@@ -10,7 +10,6 @@ const userRoutes = require('./api/user/user.routes');
 const GetHistoryChatRoute = require('./api/GetHistoryChat.routes.js')
 const GetCategories = require('./api/GetCategories.routes.js')
 const GetChatsRoute = require('./api/Getchats.routes.js')
-const saveMessage = require('./api/saveMessage.routes')
 const deleteMessage = require('./api/deleteMessage.routes.js')
 
 const router = express.Router();
@@ -25,7 +24,6 @@ router.use('/api/users', userRoutes);
 
 router.use('/api/getcategories', GetCategories)
 router.use('/api/getchats', GetChatsRoute)
-router.use('/api/saveMessage', saveMessage)
 router.use('/api/deleteMessage', deleteMessage)
 router.use('/api/gethistorychat', GetHistoryChatRoute)
 

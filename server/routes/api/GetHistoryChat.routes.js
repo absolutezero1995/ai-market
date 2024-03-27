@@ -4,7 +4,7 @@ const { ChatHistory } = require('../../db/models')
 router.get('/:id', async (req, res) => {
     try {
         const chatHistory = await ChatHistory.findAll({where: {chat_id: req.params.id}})
-        res.json(chatHistory);
+        res.send(chatHistory);
     } catch (error) {
         console.log(error)
     }

@@ -39,19 +39,7 @@ function LeftBar({ visible }: visibleProps): JSX.Element {
 
   const handleSave = async (_data: { [key: string]: string }) => {
     const addChat = document.forms.namedItem('addChat-form') as HTMLFormElement
-    const formData = new FormData(addChat)
-    const CreatedAnimal = {
-      name: formData.get('name') as string,
-      description: formData.get('description') as string,
-      photo: {
-        title: formData.getAll('title') as [],
-        url: formData.getAll('url') as [],
-      },
-    }
-
-    await addAnimals(CreatedAnimal.name, CreatedAnimal.description, CreatedAnimal.photo as {})
-    const animalsData = await animalsPage()
-    setAnimalsPageData(animalsData)
+    const formData = new FormData(addChat);
   }
 
 
