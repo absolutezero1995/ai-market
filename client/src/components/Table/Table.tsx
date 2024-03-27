@@ -100,8 +100,8 @@ function Table() {
 
     const handleDelete = async (index: number, id: number) => {
         try {
-                setViews(prevViews => prevViews.filter((_, i) => i !== index));
-                await dispatch(deleteMessage(id));
+            setViews(prevViews => prevViews.filter((_, i) => i !== index));
+            await dispatch(deleteMessage(id));   
         } catch (e) {
             console.error("Ошибка при удалении:", e);
         }

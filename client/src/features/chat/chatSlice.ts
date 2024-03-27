@@ -76,13 +76,11 @@ export const getChats = createAsyncThunk(
 
 export const deleteMessage = createAsyncThunk(
   'chat/deleteMessage',
-  async (index: number, { rejectWithValue}) => {
+  async (id, { rejectWithValue}) => {
     try {
-      await makeRequest<void>(`/api/deleteMessage/${index}`, {
+      await makeRequest<void>(`/api/deleteMessage/${id}`, {
         method: 'DELETE',
-        data: { index }
       });
-      return index;
     } catch (error) {
       throw rejectWithValue(error);
     }
