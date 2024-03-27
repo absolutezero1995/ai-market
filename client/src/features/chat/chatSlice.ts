@@ -6,7 +6,7 @@ interface MessageResponse {
   categories: string[];
 }
 
-interface ChatId {
+interface ChatId {  
   chat_id: number
 }
 
@@ -44,39 +44,12 @@ export const sendMessage = createAsyncThunk(
   }
 );
 
-// export const getHistoryChat = createAsyncThunk(
-//   'history/getHistoryChat',
-//   async (chat_id: ChatId, { rejectWithValue }) => {
-//     try {
-//       const data: MessageResponse[] = await makeRequest<MessageResponse[]>(`/api/getcategories/${chat_id.chat_id}`, {
-//         method: "GET",
-//       })
-//       return data.map(messages => messages.content)
-//     } catch (error) {
-//       throw rejectWithValue(error)
-//     }
-//   }
-// )
-
-export const saveMessage = createAsyncThunk(
-  'chat/saveMessage',
-  async ({ message, content }: { message: string, content: string }, { rejectWithValue }) => {
-    try {
-      await makeRequest<MessageResponse>("/api/saveMessage", {
-        method: 'POST',
-        data: { message, content }
-      });
-    } catch (error) {
-      throw rejectWithValue(error);
-    }
-  }
-);
 
 export const getCategory = createAsyncThunk(
   'chat/getCategory',
   async (_ , { rejectWithValue }) => {
     try {
-      const data: MessageResponse[] =  makeRequest<MessageResponse[]>("/api/getcategories", {
+      const data: MessageResponse[] =  await makeRequest<MessageResponse[]>("/api/getcategories", {
         method: 'GET',
       });
       return data;
@@ -139,28 +112,6 @@ const chatSlice = createSlice({
         state.status = 'success';
       })
       .addCase(sendMessage.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.payload as string;
-      })
-      // .addCase(getHistoryChat.pending, (state) => {
-      //   state.status = "loading";
-      // })
-      // .addCase(getHistoryChat.fulfilled, (state, action) => {
-      //   state.status = "success";
-      //   state.messages = action.payload;
-      //   state.error = null;
-      // })
-      // .addCase(getHistoryChat.rejected, (state, action) => {
-      //   state.status = "failed";
-      //   state.error = action.payload as string;
-      // })
-      .addCase(saveMessage.pending, (state) => {
-        state.status = 'loading';
-      })
-      .addCase(saveMessage.fulfilled, (state) => {
-        state.status = 'success';
-      })
-      .addCase(saveMessage.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.payload as string;
       })

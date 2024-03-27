@@ -70,8 +70,8 @@ function Table() {
             if (libraryChats.payload && libraryChats.payload.length > 0) {
 
                 setViews(libraryChats.payload[0].ChatHistories);
-            } else {
-                setViews([]);
+            // } else {
+            //     setViews([]);
             }
         }
     }
@@ -83,13 +83,14 @@ function Table() {
     const messageChatGPT = async () => {
         try {
             setIsSending(true);
+            console.log(id, 'I am ID 86')
             const res = await dispatch(sendMessage({ id, request: textarea }));
             const newMessage = {
                 request: textarea,
                 responce: res.payload as string
             };
-            setViews(prevViews => [...prevViews, newMessage]);
-            dispatch(saveMessage(newMessage));
+            setViews(prevViews => [...prevViews, newMessage]);  
+            // dispatch(saveMessage(newMessage));
             setTextarea('');
             setIsSending(false);
             if (textareaRef.current) {
@@ -134,7 +135,8 @@ function Table() {
         navigator.clipboard.writeText(content)
     }
 
-    console.log(views, 'VIEWS!!!!!!!!')
+    {console.log(views, 'I am views 137')}
+
     return (
         <div className='block-table'>
             <div className='table-inner'>
@@ -152,20 +154,6 @@ function Table() {
                         </div>
                     ))
                 )}
-
-                {/* {views.map((el) => {
-            return (
-                <div key={i} className='table-item'>
-                    <p>User:</p>
-                    <div className='span-scroll'><span>{el.message}</span></div>
-                    <p>ChatGPT:</p>
-                    <p className='span-scroll'>{el.content}</p>
-                    <div>
-                    <button onClick={() => handleCopy(el.content)}><FontAwesomeIcon icon={faCopy} /></button>
-                    <button onClick={() => handleDelete(i)}><FontAwesomeIcon icon={faTrash} /></button>
-                    </div>
-                </div>
-            )})} */}
             </div>
             <div className='block-search'>
                 <div className="search-inner">

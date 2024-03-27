@@ -22,7 +22,7 @@ router.post('/', async (req, res) => {
         content: history.responce,
       }));
     }
-    console.log(chatSettings, 'chatSettings 25')
+    // console.log(chatSettings, 'chatSettings 25')
     messages.push({ role: 'user', content: request });
 
     let model = 'gpt-3.5-turbo';
@@ -36,10 +36,11 @@ router.post('/', async (req, res) => {
     const chatCompletion = await openai.chat.completions.create({
       model,
       messages,
-      temperature,  
+      temperature,
     });
 
     const responce = chatCompletion.choices[0].message.content;
+    console.log('\x1b[31m%s\x1b[0m', responce, id, 'I AM CONSOLE LOG 43');
     const newChatHistory = { chat_id: id, request, responce };
     await ChatHistory.create(newChatHistory);
     
