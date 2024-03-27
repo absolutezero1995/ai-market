@@ -30,6 +30,7 @@ function LeftBar({ visible, chatHistory, setChatHistory }: visibleProps): JSX.El
     const axiosChats = async () => {
     if (selectedCategory && !chats[selectedCategory]) {
       const res = await dispatch(getChats(selectedCategory));
+      console.log(res, 'res33')
       if(res){
         setChats(res.payload)
       }

@@ -26,7 +26,7 @@ router.post('/', async (req, res) => {
     messages.push({ role: 'user', content: request });
 
     let model = 'gpt-3.5-turbo';
-    let temperature = 0.8;
+    let temperature = 0;
 
     if (chatSettings) {
       model = chatSettings.version;
@@ -44,7 +44,7 @@ router.post('/', async (req, res) => {
     await ChatHistory.create(newChatHistory);
     
     res.json(responce);
-  } catch (error) { 
+  } catch (error) {
     console.log('[conversation.route]', error);
     res.status(500).send('Internal Server Error');
   }

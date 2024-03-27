@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import './ChatItem.css';
-import {  useState } from 'react';
+
 
 const ChatItem = ({ chats, setChatHistory }) => {
 
@@ -10,6 +10,7 @@ const ChatItem = ({ chats, setChatHistory }) => {
         // getHistory(id);
         navigate(`/chat/${id}`);
     }
+    
 
     return (
         <div className='chat-item-container' key={chats.id}>

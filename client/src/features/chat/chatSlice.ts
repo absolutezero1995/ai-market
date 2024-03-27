@@ -89,14 +89,13 @@ export const getCategory = createAsyncThunk(
 export const getChats = createAsyncThunk(
   'chat/getChats',
   async (category_id, { rejectWithValue }) => {
-    console.log(category_id);
+    console.log(category_id, 'I am CATEGORY_ID');
     try {
       const data  = await makeRequest<MessageResponse[]>("/api/getchats", {
         method: 'POST',
         data: { category_id }
       });
-      // console.log(data[0], '- getChats')
-      console.log(data, '- ChatHistories')
+      console.log(data, 'I am ChatHistories 98')
       return data;
     } catch (error) {
       throw rejectWithValue(error);
