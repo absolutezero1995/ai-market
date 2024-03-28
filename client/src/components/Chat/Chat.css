@@ -8,7 +8,9 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
-    margin: 0 40px;
+    max-width: 1200px;
+    margin: 50px;
+    border: solid red 5px;
 }
 
 .chat {
@@ -17,12 +19,14 @@
     margin: 0 20px;
     width: 100%;
     position: relative;
+    /* border: solid blue 5px; */
 }
 
 .chat-position {
     position: absolute;
     bottom: 0;
     width: 100%;
+    /* border: solid 20px green; */
 }
 
 /* .block-left {

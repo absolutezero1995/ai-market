@@ -1,3 +1,9 @@
+.menu-container {
+    height: 40px;
+    margin-top: 60px;
+    margin-bottom: 30px;
+}
+
 
 .menu-trigger img {
     position: absolute;
@@ -11,9 +17,15 @@
     background-color: #fff;
 }
 
+
+.menu-container:hover {
+    border-radius: 10px;
+    background-color: #aeabbb85;
+}
+
 .active-logo-profile {
     position: absolute;
-    bottom: 20px;
+    bottom: 550px;
     right: 300px;
     height: 30px;
     width: 30px;
@@ -29,9 +41,21 @@
     right: 0px;
     background-color: #fff;
     padding: 10px 10px;
-    width: 220px;
-    height: 450px;
-    border: solid 5px #663434;
+    width: 242px;
+    height: 451px;
+}
+
+.dropdown-menu-profile-image {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    background-color: #ccc;
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Добавим transform в transition */
+}
+
+.dropdown-menu-profile-image:hover {
+    background-color: #ff5733;
+    transform: scale(1.1); /* Увеличим размер на 10% при наведении */
 }
 
 .dropdown-menu::before {

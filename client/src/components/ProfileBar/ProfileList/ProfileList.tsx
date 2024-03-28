@@ -27,9 +27,10 @@ function ProfileList() {
     return (
         <div className='menu-container' ref={menuRef}>
             <div className='menu-trigger' onClick={() => setOpen(!open)}>
-                <div className={`menu-trigger-img ${open ? 'active-logo-profile' : '' } `}><FontAwesomeIcon icon={faUser} /></div>
+                <div className={`menu-trigger-img`}><FontAwesomeIcon icon={faUser} /></div>
             </div>
             <div className={`dropdown-menu ${open ? 'active' : 'inactive'}`}>
+                <img className="dropdown-menu-profile-image" src="https://www.rostercon.com/wp-content/uploads/2016/04/David-Della-Rocco-min.jpg" alt="profile-image" />
                 <h3 className="dropdown-menu-h3">user.name</h3>
                 <div className="dropdown-list">
                     <ProfileItem img={faUser} text={"My Profile"} />

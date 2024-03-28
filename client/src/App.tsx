@@ -9,6 +9,7 @@ import Home from './components/Home/Home';
 import Signin from './components/Signin/Signin';
 import Signup from './components/Signup/Signup';
 import Table from './components/Table/Table';
+import ChatTable from './components/Chat/ChatTable';
 // import ActionBars from './components/ActionBars/ActionBars';
 
 function App() {
@@ -37,7 +38,7 @@ function App() {
           <Route path='/signin' element={<Signin />} />
           <Route path='/signup' element={<Signup />} />
           <Route path='/chat' element={<Chat />} />
-          <Route path='/chat/:id' element={<Table />} />
+          <Route path='/chat/:id' element={<ChatTable />} />
         </Route>
       </Routes>
     </div>

@@ -1,10 +1,12 @@
 .chat-item-container {
     display: flex;
+    margin: 10px;
+    border: solid red 5px;
 }
 
 .chat-item-title {
     display: flex;
     width: 100%;
     justify-content: center;
-    border: solid red 5px;
+
 }

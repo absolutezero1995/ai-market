@@ -1,16 +1,35 @@
 import React, { useState } from "react";
+import { useCategoryContext } from "../Rightbar/CategoryContext";
+import { useAppDispatch } from "../../hooks/redux";
+import { createChat } from "../../features/chat/chatSlice";
 
-function ConversationForm(): JSX.Element {
+function ConversationForm({ setShowModal }): JSX.Element {
+  const { selectedCategory } = useCategoryContext() || {};
   const [model, setModel] = useState("gpt-3.5-turbo");
   const [temperature, setTemperature] = useState(0.7);
+  const [title, setTitle] = useState('');
   const [role, setRole] = useState("default");
+  const dispatch = useAppDispatch();
 
   const handleOnForm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
   };
+
+  const handleInputChange = (e) => {
+    setTitle(e.target.value);
+  };
+
+  const handleCreateChat =  async () => {
+    console.log(title, 'title 19')
+    console.log(selectedCategory, 'selectedCategory');
+    await dispatch(createChat({category_id: selectedCategory, title}))
+    setShowModal(false);
+  }
+
   return (
     <form onSubmit={handleOnForm}>
         <label>Model</label>
+        <input type="text" value={title} onChange={handleInputChange} />
         <br />
         <select value={model} onChange={(e) => setModel(e.target.value)}>
           <option value="gpt 3.5-turbo">GPT 3.5-TURBO</option>
@@ -35,7 +54,7 @@ function ConversationForm(): JSX.Element {
           <option value="parent">Programer</option>
         </select>
       </label>
-      <button type="submit">OK</button>
+      <button type="submit" onClick={handleCreateChat}>OK</button>
     </form>
   );
 }

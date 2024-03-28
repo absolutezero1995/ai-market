@@ -24,7 +24,7 @@ function Navigation() {
               <Link to="/">home</Link>
             </li>
             <li>
-              <Link to="/chat">chat</Link>
+              <Link to="/chat">action</Link>
             </li>
             <li>
               <button onClick={handleLogout}>exit</button>

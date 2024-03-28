@@ -15,7 +15,7 @@ export interface AuthState {
     id: string
     email: string
     name: string
-  } | null // Добавляем объект user
+  } | null
   accessToken: string
   refreshToken: string
   message: string

@@ -11,7 +11,7 @@ const router = require('express').Router();
 
 router.post('/', async (req, res) => {
     const { id, request } = req.body;
-    console.log(id, request);
+    // console.log(id, request);
 });
 
 module.exports = router;

@@ -1,6 +1,6 @@
 import LeftBar from "../LeftBar/LeftBar";
 import RightBar from "../Rightbar/RightBar";
-import Table from "../Table/Table";
+// import Table from "../Table/Table";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import "./Chat.css"
@@ -40,7 +40,7 @@ function Chat(): JSX.Element {
             <div className="chat-search">
                 <div className="chat">
                     <div className="chat-position">
-                        <Table />
+                        {/* <Table /> */}
                     </div>
                 </div>
             </div>

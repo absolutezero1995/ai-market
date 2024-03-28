@@ -1,26 +1,15 @@
-// const router = require('express').Router();
-
-// router.delete('/:id', async (req, res) => {
-//     const { id } = req.params;
-//     console.log(id, ' - eto delete');
-// });
-
-// module.exports = router;
-
 const router = require('express').Router();
 const { ChatHistory } = require('../../db/models');
 
 router.delete('/:id', async (req, res) => {
     try {
         const { id } = req.params;
-        console.log(id, 'id')
-        // console.log(id, ' - eto delete!!!!!!!!!!!!')
-        const deleteChatItem = await ChatHistory.destroy({where: {id}})
-        // console.log(deleteChatItem, '!!!!');
+        await ChatHistory.destroy({ where: { id } });
+        res.sendStatus(204); // Отправляем статус 204 No Content, чтобы указать успешное выполнение удаления
     } catch (error) {
-        console.log(error);
+        console.error(error);
+        res.status(500).send('Internal Server Error'); // Отправляем статус 500 Internal Server Error в случае ошибки
     }
-;   
 });
 
 module.exports = router;

@@ -1,25 +1,52 @@
 .block-right-bar {
-    background: #cbc8db;
+    width: 400px;
     height: 100vh;
+    background: #cbc8db;
     overflow: hidden;
-    animation-duration: 0.5s;
+    animation-duration: 0.8s; /* Увеличим продолжительность анимации */
     animation-name: slideInR;
-    transition: 0.5s;
-    width: 250px;
+    transition: width 0.8s ease; /* Изменим продолжительность перехода и добавим эффект ease */
+}
+
+.block-navbar {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
 }
 
 .hiddenR {
     width: 0;
-    transition: 0.5s;
-    animation-duration: 0.5s;
+    transition: width 0.8s ease; /* Изменим продолжительность перехода и добавим эффект ease */
+    animation-duration: 1s; /* Увеличим продолжительность анимации */
     animation-name: slideOutR;
+}
+
+
+.content-navbar-right {
+    display: flex;
+    flex-direction: column;
+    gap: 20px
 }
 
 .content-navbar-right li {
     cursor: pointer;
+    transition: background-color 0.4s ease, transform 0.3s ease;
 }
 
-.content-navbar-right li:hover{
+.content-navbar-right li:hover {
+    border-radius: 10px;
+    background: #aeabbb85;
+    transform: scale(1.1);
+}
+
+.content-navbar-right li a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: #000;
+}
+
+.content-navbar-right li a:hover {
     background: #aeabbb85;
 }
 
@@ -28,13 +55,13 @@
         width: 0;
     }
     to {
-        width: 250px;
+        width: 400px;
     }
 }
 
 @keyframes slideOutR {
     from {
-        width: 250px;
+        width: 400px;
     }
     to {
         width: 0;
